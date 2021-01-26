@@ -1,7 +1,5 @@
 package cl.vass.practica.springreact.security.service;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,11 +18,13 @@ public class AppUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByUserName(userName);
+        User user = userRepository.findByUserName(userName);
 
-        user.orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: "+userName));
+        if(user==null){
+            throw new UsernameNotFoundException("Usuario no encontrado: "+userName);
+        }
         
-        return user.map(AppUserDetails::new).get();
+        return new AppUserDetails(user);
     }
 
 

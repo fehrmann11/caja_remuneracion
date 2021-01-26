@@ -2,9 +2,6 @@ package cl.vass.practica.springreact;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
@@ -45,10 +42,10 @@ public class UserRepositoryTest {
     @Test
     public void whenFindUserByName_thenReturnUser(){
         String userName = "111111111";
-        Optional<User> foundUser = userRepository.findByUserName(userName);
-        assertTrue(foundUser.isPresent(),"Usuario existe en base de datos");
-        if(foundUser.isPresent()){
-            assertEquals(userName, foundUser.get().getUserName(),"Usuarios coincidentes");
+        User foundUser = userRepository.findByUserName(userName);
+        assertNotNull(foundUser);
+        if(foundUser!=null){
+            assertEquals(userName, foundUser.getUserName(),"Usuarios coincidentes");
         }
     }
 
@@ -64,12 +61,9 @@ public class UserRepositoryTest {
     public void whenFindUserByName_thenCheckAdminRole(){
         String userName = "111111111";
         String rol = "ADMIN";
-        Optional<User> foundUser = userRepository.findByUserName(userName);
-        //assertTrue(foundUser.isPresent(),"Usuario existe en base de datos");
-        if(foundUser.isPresent()){
-            //assertFalse(foundUser.get().getRoles().isEmpty());
+        User foundUser = userRepository.findByUserName(userName);
+        if(foundUser!=null){
             assertNotNull(foundUser
-                .get()
                 .getRoles()
                 .stream()
                 .filter(u->u.getName().equalsIgnoreCase(rol))
