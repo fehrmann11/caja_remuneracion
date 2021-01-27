@@ -3,6 +3,7 @@ import LoginComponent from './login/LoginComponent'
 import {BrowserRouter as Router,Route, Switch} from 'react-router-dom'
 import WelcomeComponent from './welcome/WelcomeComponent';
 import HeaderComponent from './Header/HeaderComponent';
+import FooterComponent  from './footer/FooterComponent';
 
 class RemunCarg extends Component{
     render(){
@@ -14,6 +15,7 @@ class RemunCarg extends Component{
                         <Route path="/" exact component={LoginComponent}/>
                         <Route path="/welcome" component={WelcomeComponent}/>
                     </Switch>
+                    <FooterComponent/>
                 </Router>
        
             </div>
