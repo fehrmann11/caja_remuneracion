@@ -9,6 +9,7 @@ class SecurityService{
     }
     //registra el usuario en sessionStorage y crea un token
     registerSuccessfulLoginForJwt(username,token){
+        
         sessionStorage.setItem('authenticatedUser',username)
         this.setupAxiosInterceptors(this.createJWTToken(token))
         
@@ -24,7 +25,7 @@ class SecurityService{
         axios.interceptors.request.use(
             (config) =>{
                 if(this.isUserLoggedIn()){
-                    config.headers.authorizaton = token
+                    config.headers.Authorization = token
                 }
                 return config
             }
@@ -32,6 +33,7 @@ class SecurityService{
     }
 
     createJWTToken(token){
+        console.log(token)
         return 'Bearer ' + token
     }
 
