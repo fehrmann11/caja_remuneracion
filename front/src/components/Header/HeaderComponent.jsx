@@ -4,6 +4,7 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import SecurityService from '../../api/SecurityService'
 import { Link } from 'react-router-dom'
 import './HeaderComponent.css'
+import AuthenticationService from '../AuthenticationService'
 
 class HeaderComponent extends Component {
     render() {
@@ -33,9 +34,9 @@ class HeaderComponent extends Component {
                         {isUserLoggedIn && <Nav.Link href="#pricing">API</Nav.Link>}
                     </Nav>
                     <Nav>
-                        {isUserLoggedIn && <Nav.Link eventKey={2} href="#memes">
-                            Cerrar sesión
-      </Nav.Link>}
+                        {isUserLoggedIn && <Link className="nav-link" to="/logout" onClick={AuthenticationService.logout}>Cerrar sesión</Link>
+                            
+      }
                         {!isUserLoggedIn && 
                             <Link to="/login" className="Link"> Iniciar sesión </Link>
       }

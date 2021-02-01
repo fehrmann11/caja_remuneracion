@@ -10,19 +10,18 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cl.vass.practica.springreact.model.UserResponse;
 import cl.vass.practica.springreact.repository.UserRepository;
 import cl.vass.practica.springreact.security.service.AppUserDetailsService;
 import cl.vass.practica.springreact.model.Role;
 import cl.vass.practica.springreact.model.User;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
 @RequestMapping("/private/users")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserResource {
     
     @Autowired

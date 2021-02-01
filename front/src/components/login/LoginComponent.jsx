@@ -23,10 +23,10 @@ class LoginComponent extends Component {
 
     /*Está función se lanza al momento de dar clic en el botón la cual hace una promesa
     a través de SecurityService y obtiene un token*/
-    async loginClicked() {
-       await SecurityService.AuthenticationService(this.state.userName,this.state.password)
+    loginClicked() {
+       SecurityService.AuthenticationService(this.state.userName,this.state.password)
             .then((response)=>{
-            SecurityService.registerSuccessfulLoginForJwt(this.state.userName,response.data.token)
+            SecurityService.registerSuccessfulLoginForJwt(this.state.userName,response.data.jwt)
             this.props.history.push(`/welcome`)
         }).catch(()=>{
             console.log("falso")

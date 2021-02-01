@@ -3,13 +3,9 @@ class SecurityService{
 
     /*Función encargada de retornar un token y hacer la conexión a la base de datos */
     AuthenticationService(userName,password){
-        console.log(userName,password)
-        const headers = {
-            'Content-Type': 'application/json'
-        }
         return axios.post('http://localhost:8080/authenticate',{
             userName,password
-        },{headers:headers})
+        })
     }
     //registra el usuario en sessionStorage y crea un token
     registerSuccessfulLoginForJwt(username,token){
@@ -36,7 +32,7 @@ class SecurityService{
     }
 
     createJWTToken(token){
-        return 'Bearer' + token
+        return 'Bearer ' + token
     }
 
 }
