@@ -13,7 +13,7 @@ class RemunCarg extends Component{
                     <HeaderComponent/>
                     <Switch>
                         <Route path="/login" exact component={LoginComponent}/>
-                        <Route path="/welcome" component={WelcomeComponent}/>
+                        <Route path="/management" component={WelcomeComponent}/>
                     </Switch>
                     <FooterComponent/>
                 </Router>

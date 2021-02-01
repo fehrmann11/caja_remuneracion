@@ -11,7 +11,7 @@ class HeaderComponent extends Component {
         const isUserLoggedIn = SecurityService.isUserLoggedIn();
         return (
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand href="/">VASS</Navbar.Brand>
+                <Navbar.Brand><Link className="navbar-brand" to="/">VASS</Link></Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
@@ -31,7 +31,7 @@ class HeaderComponent extends Component {
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#action/3.2">Reporte mensual</NavDropdown.Item>
                         </NavDropdown>}
-                        {isUserLoggedIn && <Nav.Link href="#pricing">API</Nav.Link>}
+                        {isUserLoggedIn && <Nav.Link href="#pricing2">API</Nav.Link>}
                     </Nav>
                     <Nav>
                         {isUserLoggedIn && <Link className="nav-link" to="/logout" onClick={AuthenticationService.logout}>Cerrar sesión</Link>

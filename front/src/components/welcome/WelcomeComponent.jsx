@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import UsuariosService from '../../api/UsuariosService';
 import { Table } from 'react-bootstrap'
+import './Management.css'
 
 class WelcomeComponent extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class WelcomeComponent extends Component {
             .then(response => {
                 this.setState({
                     usuariosRoles: response.data
-                    
+
                 })
                 console.log(response)
             })
@@ -38,6 +39,7 @@ class WelcomeComponent extends Component {
                     <tr>
                         <th>Username</th>
                         <th>Rol</th>
+                        <th>Ver</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,9 +47,9 @@ class WelcomeComponent extends Component {
                         this.state.usuariosRoles.map(
                             user =>
                                 <tr key={user.userName}>
-                                    <td>{user.userName}</td>
-                                    <td>{user.roles[0]}</td>
-
+                                    <td >{user.userName}</td>
+                                    <td >{user.roles[0]}</td>
+                                    <td ><button className="btn btn-warning">Ver usuario</button></td>
                                 </tr>
                         )
 

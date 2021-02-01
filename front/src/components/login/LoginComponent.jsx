@@ -27,7 +27,7 @@ class LoginComponent extends Component {
        SecurityService.AuthenticationService(this.state.userName,this.state.password)
             .then((response)=>{
             SecurityService.registerSuccessfulLoginForJwt(this.state.userName,response.data.jwt)
-            this.props.history.push(`/welcome`)
+            this.props.history.push(`/management`)
         }).catch(()=>{
             console.log("falso")
         })
