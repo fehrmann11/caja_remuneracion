@@ -8,44 +8,50 @@ class WelcomeComponent extends Component {
         this.state = {
             usuariosRoles: []
         }
+        this.GetDataUsers = this.GetDataUsers.bind(this)
 
     }
 
     //Cuando carga la página carga los datos.
     componentDidMount() {
-        console.log('did')
+        this.GetDataUsers();
+    }
+
+    GetDataUsers() {
         UsuariosService.retornaRolUsuario()
-            .then(response => console.log(response.data))
+            .then(response => {
+                this.setState({
+                    usuariosRoles: response.data
+                    
+                })
+                console.log(response)
+            })
             .catch(error => console.log(error))
     }
 
+
+
     render() {
         return (
-            <Table striped bordered hover size="sm">
+            <Table striped bordered hover >
                 <thead>
                     <tr>
                         <th>Username</th>
                         <th>Rol</th>
-                    </tr> 
+                    </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td colSpan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
+                    {
+                        this.state.usuariosRoles.map(
+                            user =>
+                                <tr key={user.userName}>
+                                    <td>{user.userName}</td>
+                                    <td>{user.roles[0]}</td>
+
+                                </tr>
+                        )
+
+                    }
                 </tbody>
             </Table>
         )

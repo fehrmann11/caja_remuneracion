@@ -15,7 +15,7 @@ class HeaderComponent extends Component {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
-                        {isUserLoggedIn && <Nav.Link href="#features">Administración</Nav.Link>}
+                        {isUserLoggedIn && <Link className="nav-link" to="/management" >Administración</Link> }
                         {isUserLoggedIn && <NavDropdown title="Gestión" id="collasible-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">Gestión Empresas</NavDropdown.Item>
                             <NavDropdown.Divider />
@@ -38,7 +38,7 @@ class HeaderComponent extends Component {
                             
       }
                         {!isUserLoggedIn && 
-                            <Link to="/login" className="Link"> Iniciar sesión </Link>
+                            <Link  to="/login" className="nav-link"> Iniciar sesión </Link>
       }
                     </Nav>
                 </Navbar.Collapse>
