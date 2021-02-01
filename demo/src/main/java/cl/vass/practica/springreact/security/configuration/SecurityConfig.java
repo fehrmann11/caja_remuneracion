@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        //https://stackoverflow.com/questions/63043419/preflight-request-doesnt-pass-access-control-check-it-does-not-have-http-ok-st
+        //https://stackoverflow.com/questions/63043419/preflight-request-doesnt-pass-access-control-check-it-does-not-have-http-ok-st habilitar cors
         http.cors();
     }
 
