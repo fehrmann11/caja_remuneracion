@@ -4,6 +4,7 @@ import {BrowserRouter as Router,Route, Switch} from 'react-router-dom'
 import WelcomeComponent from './welcome/WelcomeComponent';
 import HeaderComponent from './Header/HeaderComponent';
 import FooterComponent  from './footer/FooterComponent';
+import InitialScreen from './initial/InitialScreen';
 
 class RemunCarg extends Component{
     render(){
@@ -12,6 +13,7 @@ class RemunCarg extends Component{
                 <Router>
                     <HeaderComponent/>
                     <Switch>
+                        <Route path="/" exact component={InitialScreen}/>
                         <Route path="/login" exact component={LoginComponent}/>
                         <Route path="/management" component={WelcomeComponent}/>
                     </Switch>

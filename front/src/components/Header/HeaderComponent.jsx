@@ -34,8 +34,7 @@ class HeaderComponent extends Component {
                         {isUserLoggedIn && <Nav.Link href="#pricing2">API</Nav.Link>}
                     </Nav>
                     <Nav>
-                        {isUserLoggedIn && <Link className="nav-link" to="/logout" onClick={AuthenticationService.logout}>Cerrar sesión</Link>
-                            
+                        {isUserLoggedIn && <Nav.Link href="/" onClick={AuthenticationService.logout}>Cerrar sesión</Nav.Link> 
       }
                         {!isUserLoggedIn && 
                             <Link  to="/login" className="nav-link"> Iniciar sesión </Link>
