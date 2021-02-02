@@ -112,6 +112,16 @@ public class Remuneracion implements Serializable {
                 return false;
             return true;
         }
+
+        public RemuneracionId() {
+        }
+
+        public RemuneracionId(Carga carga, Trabajador trabajador, Empleador empleador, Periodo periodo) {
+            this.carga = carga;
+            this.trabajador = trabajador;
+            this.empleador = empleador;
+            this.periodo = periodo;
+        }
     }
 
     @EmbeddedId
