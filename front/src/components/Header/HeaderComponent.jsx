@@ -8,6 +8,7 @@ import AuthenticationService from '../AuthenticationService'
 
 class HeaderComponent extends Component {
     render() {
+        //esta variable muestra la información si esta logeado
         const isUserLoggedIn = SecurityService.isUserLoggedIn();
         return (
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">

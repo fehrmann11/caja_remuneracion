@@ -21,6 +21,7 @@ class SecurityService{
         return true
     }
 
+    //En la cabecera se pone el token
     setupAxiosInterceptors(token){
         axios.interceptors.request.use(
             (config) =>{
@@ -32,6 +33,7 @@ class SecurityService{
         )
     }
 
+    //Crea el token Bearer
     createJWTToken(token){
         console.log(token)
         return 'Bearer ' + token

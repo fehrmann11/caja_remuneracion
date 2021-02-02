@@ -22,14 +22,15 @@ class LoginComponent extends Component {
     }
 
     /*Está función se lanza al momento de dar clic en el botón la cual hace una promesa
-    a través de SecurityService y obtiene un token*/
+    a través de SecurityService y obtiene un token, una vez obtenido el token se va a
+    la pantalla management (que es welcomeComponent)*/
     loginClicked() {
        SecurityService.AuthenticationService(this.state.userName,this.state.password)
             .then((response)=>{
             SecurityService.registerSuccessfulLoginForJwt(this.state.userName,response.data.jwt)
             this.props.history.push(`/management`)
         }).catch(()=>{
-            console.log("falso")
+            this.setState({hasLoginFailed:true})
         })
     }
 

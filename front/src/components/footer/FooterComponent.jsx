@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './FooterComponent.css'
-//import { Modal, Button} from 'react-bootstrap'
 class FooterComponent extends Component {
     render() {
         return (
