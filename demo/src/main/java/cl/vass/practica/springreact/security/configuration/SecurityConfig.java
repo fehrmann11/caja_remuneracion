@@ -38,7 +38,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //https://stackoverflow.com/questions/63043419/preflight-request-doesnt-pass-access-control-check-it-does-not-have-http-ok-st habilitar cors
         http
+            .cors()
+            .and()
             .csrf()
                 .disable()
             .authorizeRequests()
@@ -49,8 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        //https://stackoverflow.com/questions/63043419/preflight-request-doesnt-pass-access-control-check-it-does-not-have-http-ok-st habilitar cors
-        http.cors();
     }
 
     @Bean

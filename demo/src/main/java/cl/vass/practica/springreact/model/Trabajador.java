@@ -62,12 +62,12 @@ public class Trabajador implements Serializable {
     private Tramo tramo;
 
     @ManyToMany(mappedBy = "trabajadores", fetch = FetchType.LAZY)
-    private HashSet<Empleador> empleadores = new HashSet<>();
+    private Set<Empleador> empleadores = new HashSet<>();
 
     @OneToMany(mappedBy = "trabajador", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Carga> cargas;
 
-    @OneToMany(mappedBy = "trabajador", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id.trabajador", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Remuneracion> remuneraciones;
 
     public Trabajador() {

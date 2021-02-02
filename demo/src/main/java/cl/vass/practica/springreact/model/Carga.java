@@ -49,7 +49,7 @@ public class Carga implements Serializable {
     @JoinColumn(name = "trabajador_rut_trabajador", nullable = false)
     private Trabajador trabajador;
 
-    @OneToMany(mappedBy = "carga", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id.carga", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Remuneracion> remuneraciones;
 
     public Carga() {

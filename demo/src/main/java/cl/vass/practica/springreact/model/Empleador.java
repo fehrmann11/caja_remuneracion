@@ -60,9 +60,9 @@ public class Empleador implements Serializable {
         name = "empleador_has_trabajador",
         joinColumns = @JoinColumn(name = "empleador_rut_empleador", referencedColumnName = "rut_empleador", nullable = false, updatable = false),
         inverseJoinColumns = @JoinColumn(name = "trabajador_rut_trabajador", referencedColumnName = "rut_trabajador", nullable = false, updatable = false))
-    private HashSet<Trabajador> trabajadores = new HashSet<>();
+    private Set<Trabajador> trabajadores = new HashSet<>();
 
-    @OneToMany(mappedBy = "empleador", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id.empleador", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Remuneracion> remuneraciones;
 
     public Empleador() {
