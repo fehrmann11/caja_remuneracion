@@ -19,7 +19,7 @@ public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "idusuario")
-    private long id;
+    private Long id;
     
     @Column(name = "rut_usuario")
     private String userName;
@@ -32,13 +32,13 @@ public class User {
         name = "usuario_has_rol", 
         joinColumns = @JoinColumn(name = "usuario_idusuario"),
         inverseJoinColumns = @JoinColumn(name = "rol_idrol"))
-    Set<Role> roles;
+    private Set<Role> roles;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
