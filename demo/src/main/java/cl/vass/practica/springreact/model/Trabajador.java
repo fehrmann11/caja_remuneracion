@@ -33,6 +33,7 @@ public class Trabajador implements Serializable {
     @NonNull
     private String nombres;
 
+    //findByApellidoPaterno
     @Column(name = "apellido_paterno")
     @NonNull
     private String apellidoPaterno;
