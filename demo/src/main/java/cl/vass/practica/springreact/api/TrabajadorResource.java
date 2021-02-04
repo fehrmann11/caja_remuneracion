@@ -2,8 +2,11 @@ package cl.vass.practica.springreact.api;
 
 
 import cl.vass.practica.springreact.model.*;
+import cl.vass.practica.springreact.model.response.ErrorResponse;
+import cl.vass.practica.springreact.model.response.TrabajadorResponse;
 import cl.vass.practica.springreact.repository.TrabajadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/private/trabajador")
@@ -24,24 +28,33 @@ public class TrabajadorResource {
     TrabajadorRepository trabajadorRepository;
 
 
-    //@PreAuthorize("hasAnyAuthority('ADMIN','BACKOFFICE','NEGOCIO')")
-    @PreAuthorize("hasAuthority('ADMIN')")
+//Get de trabajadores
+    @PreAuthorize("hasAnyAuthority('ADMIN','BACKOFFICE','NEGOCIO')")
     @GetMapping(value="", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<TrabajadorResponse>> getTrabajadores(){//nombre completo
-        List<Trabajador> trabajadores = trabajadorRepository.findAll();
-        
+    public ResponseEntity getTrabajadores(){
+        try{
+            List<Trabajador> trabajadores = trabajadorRepository.findAll();
+            List<TrabajadorResponse> trabajadorResponse = trabajadores
+                    .stream()
+                    .map(t -> new TrabajadorResponse(
+                            t.getRut(),
+                            t.getNombres(),
+                            t.getApellidoPaterno(),
+                            t.getApellidoMaterno(),
+                            t.getTelefono(),
+                            t.getCelular(),
+                            t.getEmail(),
+                            t.getDireccion(),
+                            t.getTramo()))
+                    .collect(Collectors.toList());
+            return  ResponseEntity.ok(trabajadorResponse);
 
-        //rellenar la lista con trabajadores...(nombres apellido paterno rut ..)
-        List<TrabajadorResponse> trabajadorResponse = new LinkedList<TrabajadorResponse>() ;
-        TrabajadorResponse tr;
-        String nombre;
-        for (int i=0;i<trabajadores.size();i++){
-               nombre = trabajadores.get(i).getNombres(); //getNombre??
-               tr = new TrabajadorResponse();
-               tr.setNombre(nombre);
-               trabajadorResponse.add(tr);
-            }
-       return ResponseEntity.ok(trabajadorResponse);
-   }
+
+        }catch (Exception e){
+            ErrorResponse response = new ErrorResponse("Error al recuperar trabajadores",e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
     
 }
