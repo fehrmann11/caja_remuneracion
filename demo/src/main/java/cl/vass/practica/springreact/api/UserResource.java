@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
-import cl.vass.practica.springreact.model.UserResponse;
+import cl.vass.practica.springreact.model.response.UserResponse;
 import cl.vass.practica.springreact.repository.UserRepository;
 import cl.vass.practica.springreact.security.service.AppUserDetailsService;
 import cl.vass.practica.springreact.model.Role;

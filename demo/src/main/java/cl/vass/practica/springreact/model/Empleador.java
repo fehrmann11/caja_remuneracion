@@ -144,4 +144,15 @@ public class Empleador implements Serializable {
         return remuneraciones;
     }
 
+    public Empleador(String rut, String razonSocial, String telefono, String celular, String email, String direccion,
+            TipoEmpleador tipoEmpleador) {
+        this.rut = rut;
+        this.razonSocial = razonSocial;
+        this.telefono = telefono;
+        this.celular = celular;
+        this.email = email;
+        this.direccion = direccion;
+        this.tipoEmpleador = tipoEmpleador;
+    }
+
 }
