@@ -39,7 +39,6 @@ class WelcomeComponent extends Component {
                     <tr>
                         <th>Username</th>
                         <th>Rol</th>
-                        <th>Ver</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,7 +48,6 @@ class WelcomeComponent extends Component {
                                 <tr key={user.userName}>
                                     <td >{user.userName}</td>
                                     <td >{user.roles[0]}</td>
-                                    <td ><button className="btn btn-warning">Ver usuario</button></td>
                                 </tr>
                         )
 
