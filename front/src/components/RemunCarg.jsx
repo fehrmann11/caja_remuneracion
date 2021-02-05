@@ -5,6 +5,8 @@ import WelcomeComponent from './welcome/WelcomeComponent';
 import HeaderComponent from './Header/HeaderComponent';
 import FooterComponent  from './footer/FooterComponent';
 import InitialScreen from './initial/InitialScreen';
+import AuthenticatedRoute from './Authentication/AuthenticatedRoute';
+import ErrorComponent from './Error404/ErrorComponent';
 
 class RemunCarg extends Component{
     render(){
@@ -15,7 +17,8 @@ class RemunCarg extends Component{
                     <Switch>
                         <Route path="/" exact component={InitialScreen}/>
                         <Route path="/login" exact component={LoginComponent}/>
-                        <Route path="/management" component={WelcomeComponent}/>
+                        <AuthenticatedRoute path="/management" component={WelcomeComponent}/>
+                        <Route component={ErrorComponent}/>
                     </Switch>
                     <FooterComponent/>
                 </Router>

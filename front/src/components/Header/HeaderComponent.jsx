@@ -4,7 +4,7 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import SecurityService from '../../api/SecurityService'
 import { Link } from 'react-router-dom'
 import './HeaderComponent.css'
-import AuthenticationService from '../AuthenticationService'
+import AuthenticationService from '../Authentication/AuthenticationService'
 
 class HeaderComponent extends Component {
     render() {
