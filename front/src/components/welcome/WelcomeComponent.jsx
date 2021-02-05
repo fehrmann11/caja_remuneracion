@@ -15,7 +15,9 @@ class WelcomeComponent extends Component {
 
     //Cuando carga la página carga los datos.
     componentDidMount() {
+        //window.addEventListener("beforeunload", onUnload);
         this.GetDataUsers();
+        
     }
 
     GetDataUsers() {

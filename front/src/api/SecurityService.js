@@ -12,6 +12,7 @@ class SecurityService{
         
         sessionStorage.setItem('authenticatedUser',username)
         this.setupAxiosInterceptors(this.createJWTToken(token))
+        localStorage.setItem("jwt", token)
         
     }
     //ve si está logeado
