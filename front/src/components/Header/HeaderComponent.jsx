@@ -18,7 +18,7 @@ class HeaderComponent extends Component {
                     <Nav className="mr-auto">
                         {isUserLoggedIn && <Link className="nav-link" to="/management" >Administración</Link> }
                         {isUserLoggedIn && <NavDropdown title="Gestión" id="collasible-nav-dropdown">
-                            <NavDropdown.Item> <Link to="/enterprisesManagement" style={{textDecoration:'none', color:'black'}}>Gestión Empresas</Link></NavDropdown.Item>
+                            <Link className="dropdown-item" to="/enterprisesManagement" style={{textDecoration:'none', color:'black'}}>Gestión Empresas</Link>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#action/3.2">Gestión Trabajadores</NavDropdown.Item>
                         </NavDropdown>}
