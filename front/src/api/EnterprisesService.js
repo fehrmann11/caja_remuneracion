@@ -1,19 +1,18 @@
 import axios from 'axios'
 import AuthenticationService from '../components/Authentication/AuthenticationService';
 import SecurityService from './SecurityService';
-class UsuariosService{
 
-    //Retorna los usuarios
-    retornaRolUsuario(){
+class EnterprisesService{
+     //Retorna los usuarios
+     returnEnterprises(){
         if(AuthenticationService.isTokenActive()===''){
-            return axios.get('http://localhost:8080/private/users')
+            return axios.get('http://localhost:8080/private/empleador')
         }else{
             let token = AuthenticationService.isTokenActive();
             SecurityService.setupAxiosInterceptors('Bearer '+ token)
-            return axios.get('http://localhost:8080/private/users')
+            return axios.get('http://localhost:8080/private/empleador')
         }
     }
-
 }
 
-export default new UsuariosService();
+export default new EnterprisesService();

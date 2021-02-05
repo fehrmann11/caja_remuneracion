@@ -16,7 +16,7 @@ class AuthenticationService {
         return true
     }
 
-    //
+    //esta función devuelve el token que está en local storage, si esta vacio retorna un string vacio, sino el token.
     isTokenActive(){
         let token = localStorage.getItem('jwt')
         if (token === null) return ''
