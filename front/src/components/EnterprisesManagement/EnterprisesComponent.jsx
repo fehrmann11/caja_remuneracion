@@ -13,7 +13,7 @@ class EnterprisesComponent extends Component{
     }
 
     GetEnterprises(){
-        EnterprisesService.returnEnterprises()
+        EnterprisesService.returnEnterprises('/private/empleador')
         .then(response =>{
             console.log(response.data)
         })

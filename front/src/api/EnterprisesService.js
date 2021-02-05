@@ -3,14 +3,14 @@ import AuthenticationService from '../components/Authentication/AuthenticationSe
 import SecurityService from './SecurityService';
 
 class EnterprisesService{
-     //Retorna los usuarios
-     returnEnterprises(){
+     //Retorna los usuarios de cualquier servicio (Lunes cambiar nombre)
+     returnEnterprises(ruta){
         if(AuthenticationService.isTokenActive()===''){
-            return axios.get('http://localhost:8080/private/empleador')
+            return axios.get(`http://localhost:8080${ruta}`)
         }else{
             let token = AuthenticationService.isTokenActive();
             SecurityService.setupAxiosInterceptors('Bearer '+ token)
-            return axios.get('http://localhost:8080/private/empleador')
+            return axios.get(`http://localhost:8080${ruta}`)
         }
     }
 }
