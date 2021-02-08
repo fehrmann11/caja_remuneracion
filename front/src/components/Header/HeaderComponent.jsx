@@ -4,7 +4,7 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import SecurityService from '../../api/SecurityService'
 import { Link } from 'react-router-dom'
 import './HeaderComponent.css'
-import AuthenticationService from '../AuthenticationService'
+import AuthenticationService from '../Authentication/AuthenticationService'
 
 class HeaderComponent extends Component {
     render() {
@@ -18,7 +18,7 @@ class HeaderComponent extends Component {
                     <Nav className="mr-auto">
                         {isUserLoggedIn && <Link className="nav-link" to="/management" >Administración</Link> }
                         {isUserLoggedIn && <NavDropdown title="Gestión" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Gestión Empresas</NavDropdown.Item>
+                            <Link className="dropdown-item" to="/enterprisesManagement" style={{textDecoration:'none', color:'black'}}>Gestión Empresas</Link>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#action/3.2">Gestión Trabajadores</NavDropdown.Item>
                         </NavDropdown>}

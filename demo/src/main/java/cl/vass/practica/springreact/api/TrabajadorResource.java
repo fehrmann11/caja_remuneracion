@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/private/trabajador")
@@ -26,27 +27,6 @@ public class TrabajadorResource {
 
     @Autowired
     TrabajadorRepository trabajadorRepository;
-
-
-    //@PreAuthorize("hasAnyAuthority('ADMIN','BACKOFFICE','NEGOCIO')")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping(value="", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<TrabajadorResponse>> getTrabajadores(){//nombre completo
-        List<Trabajador> trabajadores = trabajadorRepository.findAll();
-        
-
-        //rellenar la lista con trabajadores...(nombres apellido paterno rut ..)
-        List<TrabajadorResponse> trabajadorResponse = new LinkedList<TrabajadorResponse>() ;
-        TrabajadorResponse tr;
-        String nombre;
-        for (int i=0;i<trabajadores.size();i++){
-               nombre = trabajadores.get(i).getNombres(); //getNombre??
-               tr = new TrabajadorResponse();
-               tr.setNombre(nombre);
-               trabajadorResponse.add(tr);
-            }
-       return ResponseEntity.ok(trabajadorResponse);
-   }
 
    // Busca las cargas de un trabajador por id (rut)
    @PreAuthorize("hasAnyAuthority('ADMIN','BACKOFFICE','NEGOCIO')")
@@ -65,5 +45,32 @@ public class TrabajadorResource {
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
        }
    }
-    
+
+   //Get de trabajadores
+@PreAuthorize("hasAnyAuthority('ADMIN','BACKOFFICE','NEGOCIO')")
+@GetMapping(value="", produces = MediaType.APPLICATION_JSON_VALUE)
+public ResponseEntity getTrabajadores(){
+        try{
+            List<Trabajador> trabajadores = trabajadorRepository.findAll();
+            List<TrabajadorResponse> trabajadorResponse = trabajadores
+                    .stream()
+                    .map(t -> new TrabajadorResponse(
+                            t.getRut(),
+                            t.getNombres(),
+                            t.getApellidoPaterno(),
+                            t.getApellidoMaterno(),
+                            t.getTelefono(),
+                            t.getCelular(),
+                            t.getEmail(),
+                            t.getDireccion(),
+                            t.getTramo()))
+                    .collect(Collectors.toList());
+            return  ResponseEntity.ok(trabajadorResponse);
+
+
+        }catch (Exception e){
+            ErrorResponse response = new ErrorResponse("Error al recuperar trabajadores",e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
 }

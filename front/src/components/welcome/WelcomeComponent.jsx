@@ -16,6 +16,7 @@ class WelcomeComponent extends Component {
     //Cuando carga la página carga los datos.
     componentDidMount() {
         this.GetDataUsers();
+        
     }
 
     GetDataUsers() {
@@ -25,7 +26,7 @@ class WelcomeComponent extends Component {
                     usuariosRoles: response.data
 
                 })
-                console.log(response)
+                
             })
             .catch(error => console.log(error))
     }
@@ -39,7 +40,6 @@ class WelcomeComponent extends Component {
                     <tr>
                         <th>Username</th>
                         <th>Rol</th>
-                        <th>Ver</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,7 +49,6 @@ class WelcomeComponent extends Component {
                                 <tr key={user.userName}>
                                     <td >{user.userName}</td>
                                     <td >{user.roles[0]}</td>
-                                    <td ><button className="btn btn-warning">Ver usuario</button></td>
                                 </tr>
                         )
 

@@ -41,7 +41,7 @@ public class CargaResource {
     // Busca carga por id (rut)
     @PreAuthorize("hasAnyAuthority('ADMIN','BACKOFFICE','NEGOCIO')")
     @GetMapping("/{id}")
-    public ResponseEntity getEmpleadorByRut(@PathVariable("id") String id){
+    public ResponseEntity getCargaByRut(@PathVariable("id") String id){
         try{
             Optional<Carga> optCarga = cargaRepository.findById(id);
             if(optCarga.isPresent()){
@@ -67,7 +67,7 @@ public class CargaResource {
     // Crea una nueva carga
     @PreAuthorize("hasAnyAuthority('BACKOFFICE')")
     @PostMapping(value="", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity addEmpleador(@RequestBody CargaRequest cargaRequest){
+    public ResponseEntity addCarga(@RequestBody CargaRequest cargaRequest){
         try{
 
             Optional<Trabajador> trabajador = trabajadorRepository.findById(cargaRequest.getRutTrabajador());
