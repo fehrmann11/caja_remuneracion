@@ -4,7 +4,7 @@ import SecurityService from './SecurityService';
 
 class EnterprisesService{
      //Retorna los usuarios de cualquier servicio (Lunes cambiar nombre)
-     returnEnterprises(ruta){
+     returnGet(ruta){
         if(AuthenticationService.isTokenActive()===''){
             return axios.get(`http://localhost:8080${ruta}`)
         }else{

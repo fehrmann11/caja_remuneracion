@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import UsuariosService from '../../api/UsuariosService';
+
 import { Table } from 'react-bootstrap'
 import './Management.css'
+import ApiService from '../../api/EnterprisesService';
 
 class WelcomeComponent extends Component {
     constructor(props) {
@@ -20,7 +21,7 @@ class WelcomeComponent extends Component {
     }
 
     GetDataUsers() {
-        UsuariosService.retornaRolUsuario()
+        ApiService.returnGet('/private/users')
             .then(response => {
                 this.setState({
                     usuariosRoles: response.data
