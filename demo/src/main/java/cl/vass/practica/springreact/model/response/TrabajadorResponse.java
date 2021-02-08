@@ -1,4 +1,6 @@
-package cl.vass.practica.springreact.model;
+package cl.vass.practica.springreact.model.response;
+
+import cl.vass.practica.springreact.model.Trabajador;
 
 public class TrabajadorResponse {
     private  String nombre;

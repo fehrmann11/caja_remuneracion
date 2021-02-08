@@ -16,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -55,6 +57,7 @@ public class Empleador implements Serializable {
     @NonNull
     private TipoEmpleador tipoEmpleador;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
         name = "empleador_has_trabajador",
@@ -62,6 +65,7 @@ public class Empleador implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "trabajador_rut_trabajador", referencedColumnName = "rut_trabajador", nullable = false, updatable = false))
     private Set<Trabajador> trabajadores = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.empleador", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Remuneracion> remuneraciones;
 

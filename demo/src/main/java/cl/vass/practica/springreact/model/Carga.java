@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -45,10 +47,12 @@ public class Carga implements Serializable {
     @NonNull
     private TipoCarga tipo;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "trabajador_rut_trabajador", nullable = false)
     private Trabajador trabajador;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.carga", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Remuneracion> remuneraciones;
 
@@ -116,6 +120,16 @@ public class Carga implements Serializable {
 
     public void setRemuneraciones(List<Remuneracion> remuneraciones) {
         this.remuneraciones = new HashSet<>(remuneraciones);
+    }
+
+    public Carga(String rut, String nombres, String apellidoPaterno, String apellidoMaterno, TipoCarga tipo,
+            Trabajador trabajador) {
+        this.rut = rut;
+        this.nombres = nombres;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.tipo = tipo;
+        this.trabajador = trabajador;
     }
    
 }
