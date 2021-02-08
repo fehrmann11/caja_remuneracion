@@ -14,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -62,12 +64,15 @@ public class Trabajador implements Serializable {
     @NonNull
     private Tramo tramo;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "trabajadores", fetch = FetchType.LAZY)
     private Set<Empleador> empleadores = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "trabajador", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Carga> cargas;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.trabajador", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Remuneracion> remuneraciones;
 

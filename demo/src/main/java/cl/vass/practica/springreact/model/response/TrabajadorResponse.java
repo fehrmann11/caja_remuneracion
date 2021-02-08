@@ -1,6 +1,5 @@
 package cl.vass.practica.springreact.model.response;
 
-import cl.vass.practica.springreact.model.Trabajador;
 import cl.vass.practica.springreact.model.enums.Tramo;
 
 public class TrabajadorResponse {
@@ -50,7 +49,8 @@ public class TrabajadorResponse {
         return tramo;
     }
 
-    public TrabajadorResponse(String rut, String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, String celular, String email, String direccion, Tramo tramo) {
+    public TrabajadorResponse(String rut, String nombres, String apellidoPaterno, String apellidoMaterno,
+            String telefono, String celular, String email, String direccion, Tramo tramo) {
         this.rut = rut;
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
