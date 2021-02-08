@@ -1,9 +1,9 @@
 package cl.vass.practica.springreact.api;
 
-import cl.vass.practica.springreact.model.*;
-import cl.vass.practica.springreact.model.response.ErrorResponse;
-import cl.vass.practica.springreact.model.response.TrabajadorResponse;
-import cl.vass.practica.springreact.repository.TrabajadorRepository;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import cl.vass.practica.springreact.model.Trabajador;
+import cl.vass.practica.springreact.model.response.ErrorResponse;
+import cl.vass.practica.springreact.model.response.TrabajadorResponse;
+import cl.vass.practica.springreact.repository.TrabajadorRepository;
 
 @RestController
 @RequestMapping("/private/trabajador")
