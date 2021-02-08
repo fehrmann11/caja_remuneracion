@@ -9,11 +9,18 @@ class EnterprisesComponent extends Component {
         this.state={
             enterprises : [],
             information : [],
-            visible :false
+            visible :false,
+            text: ''
         }
 
         this.GetEnterprises = this.GetEnterprises.bind(this);
         this.information = this.information.bind(this);
+        this.textSearch = this.textSearch.bind(this); 
+    }
+
+    //textoSearch: Esta función lo que hace es guardar el texto en el input
+    textSearch(){
+
     }
 
     componentDidMount() {
@@ -22,7 +29,6 @@ class EnterprisesComponent extends Component {
 
     //mostrar la información de la empresa al hacer clic
     information(id){
-        console.log(id)
         EnterprisesService.returnGet(`/private/empleador/${id}`)
         .then(response=>{
             this.setState({
@@ -39,7 +45,7 @@ class EnterprisesComponent extends Component {
                 this.setState({
                     enterprises : response.data
                 })
-                console.log(response.data)
+                console.log(response)
             })
             .catch(error => console.log(error))
     }
@@ -59,7 +65,7 @@ class EnterprisesComponent extends Component {
                                 <Button variant="outline-primary">agregar empleador</Button>
                             </Nav>
                             <Form inline>
-                                <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                                <FormControl onChange={this.textSearch} type="text" placeholder="Search" className="mr-sm-2" />
                                 <Button variant="outline-success">Search</Button>
                             </Form>
                         </Navbar.Collapse>
@@ -71,17 +77,15 @@ class EnterprisesComponent extends Component {
                             <tr>
                                 <th>Nombre Empresa</th>
                                 <th>Rut</th>
-                                <th>Ver información</th>
                             </tr>
                         </thead>
                         <tbody>
                         {
                         this.state.enterprises.map(
                             enterprise =>
-                                <tr  key={enterprise.rut}>
+                                <tr id="info" onClick={() =>this.information(enterprise.rut)} key={enterprise.rut}>
                                     <td >{enterprise.razonSocial}</td>
                                     <td >{enterprise.rut}</td>
-                                    <td ><button className="btn btn-warning" onClick={() =>this.information(enterprise.rut)}>Ver información</button></td>
                                 </tr>
                         )
 

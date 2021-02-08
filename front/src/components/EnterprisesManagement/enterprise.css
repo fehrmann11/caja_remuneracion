@@ -14,3 +14,7 @@ li{
     display: flex!important;
     flex-basis: auto;
 }}
+
+#info{
+    cursor: pointer;
+}
