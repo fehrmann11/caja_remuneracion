@@ -1,5 +1,6 @@
 package cl.vass.practica.springreact.api;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -10,15 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cl.vass.practica.springreact.model.Empleador;
 import cl.vass.practica.springreact.model.enums.TipoEmpleador;
@@ -58,6 +51,20 @@ public class EmpleadorResource {
             ErrorResponse response = new ErrorResponse("Error al recuperar empleadores",e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
+    }
+
+    // Busca a los empleadores por rut y razonSocial
+    @PreAuthorize("hasAnyAuthority('ADMIN','BACKOFFICE','NEGOCIO')")
+    @GetMapping(value="", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Empleador> getData(@RequestParam(required = false,name = "idRut") String idRut,
+                                   @RequestParam(value = "name",required = false) String name){
+        HashMap<String, Object> data = new HashMap<>();
+
+        if (idRut!=null)
+            data.put("rut",idRut);
+        if(name!=null)
+            data.put("razonSocial",name);
+        return empleadorRepository.getData(data);
     }
 
     // Busca empleador por id (rut)

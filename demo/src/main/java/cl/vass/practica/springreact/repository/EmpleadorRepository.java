@@ -4,6 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import cl.vass.practica.springreact.model.Empleador;
 
-public interface EmpleadorRepository extends JpaRepository<Empleador, String> {
+import java.util.HashMap;
+import java.util.List;
 
+public interface EmpleadorRepository extends JpaRepository<Empleador, String> {
+    //Buscar empleador por nombre
+    public List<Empleador> getData(HashMap<String, Object> conditions);
 }
