@@ -10,14 +10,15 @@ class EnterprisesComponent extends Component {
             enterprises : [],
             information : [],
             visible :false,
-            text: ''
+            textBuscar: '',
+            enterprisesOld:[]
         }
 
         this.GetEnterprises = this.GetEnterprises.bind(this);
         this.information = this.information.bind(this);
         this.textSearch = this.textSearch.bind(this); 
-        this.filter2 = this.filter2.bind(this);
-        this.filterOnclick = this.filterOnclick.bind(this);
+        this.filter = this.filter.bind(this);
+        
     }
 
     //textoSearch: Esta función lo que hace es guardar el texto en el input
@@ -28,19 +29,20 @@ class EnterprisesComponent extends Component {
     }
 
     //función de filtro
-    filter2(array, string) {
-        return array.filter(RegExp.prototype.test, new RegExp([...string].join('.*'), 'i'));
-    }
-    //función para filtrar el buscador de empleadores
-    filterOnclick(){
-        let name = []
-        this.state.enterprises.map(enterprisesName => {
-            name.push(enterprisesName.razonSocial)
+    filter(event) {
+        var text = event.target.value//doggis
+        const data = this.state.enterprisesOld
+        const newData = data.filter(function(item){
+            const itemData = item.razonSocial.toUpperCase()
+            const textData = text.toUpperCase()
+            return itemData.indexOf(textData) > -1
         })
-        console.log(typeof (this.state.text))
-        //console.log(this.filter(name,this.state.text))
+        this.setState({
+            enterprises: newData,
+            text: text,
+        })
+        
     }
-
     componentDidMount() {
         this.GetEnterprises();
     }
@@ -61,7 +63,8 @@ class EnterprisesComponent extends Component {
         EnterprisesService.returnGet('/private/empleador')
             .then(response => {
                 this.setState({
-                    enterprises : response.data
+                    enterprises : response.data,
+                    enterprisesOld: response.data
                 })
             })
             .catch(error => console.log(error))
@@ -82,8 +85,8 @@ class EnterprisesComponent extends Component {
                                 <Button variant="outline-primary">agregar empleador</Button>
                             </Nav>
                             <Form inline>
-                                <FormControl name="text" onChange={this.textSearch} type="text" placeholder="Search" className="mr-sm-2" />
-                                <Button onClick={this.filter} variant="outline-success">Search</Button>
+                                <FormControl name="text" value={this.state.text} onChange={(text) => this.filter(text)} type="text" placeholder="Search" className="mr-sm-2" />
+                               
                             </Form>
                         </Navbar.Collapse>
                     </Navbar>
