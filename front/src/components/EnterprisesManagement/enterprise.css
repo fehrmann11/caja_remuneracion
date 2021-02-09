@@ -15,6 +15,15 @@ li{
     flex-basis: auto;
 }}
 
+#headerInfo{
+    background-color: rgb(201, 200, 200);
+}
+
 #info{
     cursor: pointer;
+    background-color: white;
+}
+
+#info:hover{
+    background-color: rgb(169, 216, 231);
 }

@@ -16,11 +16,29 @@ class EnterprisesComponent extends Component {
         this.GetEnterprises = this.GetEnterprises.bind(this);
         this.information = this.information.bind(this);
         this.textSearch = this.textSearch.bind(this); 
+        this.filter2 = this.filter2.bind(this);
+        this.filterOnclick = this.filterOnclick.bind(this);
     }
 
     //textoSearch: Esta función lo que hace es guardar el texto en el input
-    textSearch(){
+    textSearch(event){
+        this.setState({
+            text : event.target.value
+        })
+    }
 
+    //función de filtro
+    filter2(array, string) {
+        return array.filter(RegExp.prototype.test, new RegExp([...string].join('.*'), 'i'));
+    }
+    //función para filtrar el buscador de empleadores
+    filterOnclick(){
+        let name = []
+        this.state.enterprises.map(enterprisesName => {
+            name.push(enterprisesName.razonSocial)
+        })
+        console.log(typeof (this.state.text))
+        //console.log(this.filter(name,this.state.text))
     }
 
     componentDidMount() {
@@ -45,7 +63,6 @@ class EnterprisesComponent extends Component {
                 this.setState({
                     enterprises : response.data
                 })
-                console.log(response)
             })
             .catch(error => console.log(error))
     }
@@ -65,8 +82,8 @@ class EnterprisesComponent extends Component {
                                 <Button variant="outline-primary">agregar empleador</Button>
                             </Nav>
                             <Form inline>
-                                <FormControl onChange={this.textSearch} type="text" placeholder="Search" className="mr-sm-2" />
-                                <Button variant="outline-success">Search</Button>
+                                <FormControl name="text" onChange={this.textSearch} type="text" placeholder="Search" className="mr-sm-2" />
+                                <Button onClick={this.filter} variant="outline-success">Search</Button>
                             </Form>
                         </Navbar.Collapse>
                     </Navbar>
@@ -74,7 +91,7 @@ class EnterprisesComponent extends Component {
                 <div style={{marginTop:'2%'}}>
                     <Table striped bordered hover size="sm">
                         <thead>
-                            <tr>
+                            <tr id="headerInfo">
                                 <th>Nombre Empresa</th>
                                 <th>Rut</th>
                             </tr>
@@ -83,7 +100,7 @@ class EnterprisesComponent extends Component {
                         {
                         this.state.enterprises.map(
                             enterprise =>
-                                <tr id="info" onClick={() =>this.information(enterprise.rut)} key={enterprise.rut}>
+                                <tr  id="info" onClick={() =>this.information(enterprise.rut)} key={enterprise.rut}>
                                     <td >{enterprise.razonSocial}</td>
                                     <td >{enterprise.rut}</td>
                                 </tr>
