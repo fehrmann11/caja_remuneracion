@@ -3,6 +3,10 @@ import EnterprisesService from '../../api/EnterprisesService';
 import './enterprise.css';
 import { Form, FormControl, Button, Navbar, Nav, Table } from 'react-bootstrap'
 
+//import componentes reutilizables
+import Title from '../reuseComponent/Title'
+import TableInfo from '../reuseComponent/TableInfo'
+
 class EnterprisesComponent extends Component {
     constructor(props) {
         super(props)
@@ -16,19 +20,14 @@ class EnterprisesComponent extends Component {
 
         this.GetEnterprises = this.GetEnterprises.bind(this);
         this.information = this.information.bind(this);
-        this.textSearch = this.textSearch.bind(this); 
+   
         this.filter = this.filter.bind(this);
         
     }
 
-    //textoSearch: Esta función lo que hace es guardar el texto en el input
-    textSearch(event){
-        this.setState({
-            text : event.target.value
-        })
-    }
+  
 
-    //función de filtro
+    //función de filtro en el buscador
     filter(event) {
         
         var text = event.target.value
@@ -38,9 +37,9 @@ class EnterprisesComponent extends Component {
         this.setState({
             text:text
         })
+        //Si es rut
         if( Number.isInteger(parseInt(text[0])) ){
             rut = event.target.value
-            console.log(typeof(rut))
             text = ''
             
         }
@@ -88,7 +87,8 @@ class EnterprisesComponent extends Component {
         let inf = this.state.information;
         return (
             <div className="container">
-                <h1 className="title">Lista de empleadores</h1>
+                <Title titulo="empleadores"/>
+                
                 <div id="buscador">
                     <Navbar bg="light" expand="lg">
 
@@ -124,8 +124,11 @@ class EnterprisesComponent extends Component {
 
                         }
                         </tbody>
-                    </Table>
+                    </Table >
                 </div>
+                
+                <TableInfo array={[this.state.enterprises]}/>
+                
             
                 {visible && 
                 <div>
