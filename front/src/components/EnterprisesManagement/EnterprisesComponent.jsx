@@ -30,17 +30,30 @@ class EnterprisesComponent extends Component {
 
     //función de filtro
     filter(event) {
-        var text = event.target.value//doggis
-        const data = this.state.enterprisesOld
-        const newData = data.filter(function(item){
-            const itemData = item.razonSocial.toUpperCase()
-            const textData = text.toUpperCase()
-            return itemData.indexOf(textData) > -1
-        })
+        
+        var text = event.target.value
+        
+        let rut = ''
+        
         this.setState({
-            enterprises: newData,
-            text: text,
+            text:text
         })
+        if( Number.isInteger(parseInt(text[0])) ){
+            rut = event.target.value
+            console.log(typeof(rut))
+            text = ''
+            
+        }
+        EnterprisesService.returnGet(`/private/empleador/busqueda?name=${text}&idRut=${rut}`)
+        .then(response=>{
+        
+            
+            let newData = response.data
+            this.setState({
+                enterprises: newData
+            })
+        })
+        
         
     }
     componentDidMount() {
