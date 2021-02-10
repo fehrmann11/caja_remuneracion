@@ -55,7 +55,7 @@ public class EmpleadorResource {
 
     // Busca a los empleadores por rut y razonSocial
     @PreAuthorize("hasAnyAuthority('ADMIN','BACKOFFICE','NEGOCIO')")
-    @GetMapping(value="", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value="/busqueda", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Empleador> getData(@RequestParam(required = false,name = "idRut") String idRut,
                                    @RequestParam(value = "name",required = false) String name){
         HashMap<String, Object> data = new HashMap<>();
