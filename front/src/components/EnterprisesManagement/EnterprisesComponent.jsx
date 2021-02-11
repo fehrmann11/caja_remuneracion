@@ -23,6 +23,7 @@ class EnterprisesComponent extends Component {
         this.information = this.information.bind(this);
         this.deleteEnterprise = this.deleteEnterprise.bind(this);
         this.filter = this.filter.bind(this);
+        this.updateEnterprise = this.updateEnterprise.bind(this);
         
     }
 
@@ -101,6 +102,12 @@ class EnterprisesComponent extends Component {
         
     }
 
+    //función que actualiza una empresa
+    updateEnterprise(id){
+        console.log(id)
+        this.props.history.push(`/enterprisesManagement/${id}`)
+    }
+
     render() {
         let visible = this.state.visible;
         let inf = this.state.information;
@@ -117,7 +124,7 @@ class EnterprisesComponent extends Component {
                                 <Button variant="outline-primary">agregar empleador</Button>
                             </Nav>
                             <Form inline>
-                                <FormControl name="text" value={this.state.text} onChange={(text) => this.filter(text)} type="text" placeholder="Search" className="mr-sm-2" />
+                                <FormControl name="text" value={this.state.text} onChange={(text) => this.filter(text)} type="text" placeholder="Buscar" className="mr-sm-2" />
                                
                             </Form>
                         </Navbar.Collapse>
@@ -140,7 +147,7 @@ class EnterprisesComponent extends Component {
                                 <tr  id="info" onClick={() =>this.information(enterprise.rut)} key={enterprise.rut}>
                                     <td >{enterprise.razonSocial}</td>
                                     <td >{enterprise.rut}</td>
-                                    <td><Button variant="outline-warning">Editar</Button></td>
+                                    <td><Button onClick={()=>this.updateEnterprise(enterprise.rut)} variant="outline-warning">Editar</Button></td>
                                     <td><Button onClick={()=>this.deleteEnterprise(enterprise.rut)} variant="outline-danger">Eliminar</Button></td>
                                 </tr>
                         )

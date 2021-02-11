@@ -8,7 +8,7 @@ import InitialScreen from './initial/InitialScreen';
 import AuthenticatedRoute from './Authentication/AuthenticatedRoute';
 import ErrorComponent from './Error404/ErrorComponent';
 import EnterprisesComponent from './EnterprisesManagement/EnterprisesComponent';
-
+import EnterprisesForm from './EnterprisesManagement/EnterprisesForm';
 class RemunCarg extends Component{
     render(){
         return(
@@ -19,6 +19,7 @@ class RemunCarg extends Component{
                         <Route path="/" exact component={InitialScreen}/>
                         <Route path="/login" exact component={LoginComponent}/>
                         <AuthenticatedRoute path="/management" component={WelcomeComponent}/>
+                        <AuthenticatedRoute path="/enterprisesManagement/:id" component={EnterprisesForm}/>
                         <AuthenticatedRoute path="/enterprisesManagement" component={EnterprisesComponent}/>
                         <Route component={ErrorComponent}/>
                     </Switch>
