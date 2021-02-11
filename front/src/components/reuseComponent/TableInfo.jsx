@@ -1,14 +1,17 @@
 import React from 'react';
 import './reuseComponent.css'
-//import { Table } from 'react-bootstrap'
 
-function TableInfo(props){
-    let arreglo = props.array;
 
-    console.log(arreglo)
+function TableInfo(props) {
+    console.log(props)
+    //let arreglo = props.array;
 
-    return(
-        <div>hola función</div>
+    
+
+    return (
+    <div>
+        
+    </div>    
     )
 }
 

@@ -5,7 +5,7 @@ import { Form, FormControl, Button, Navbar, Nav, Table } from 'react-bootstrap'
 
 //import componentes reutilizables
 import Title from '../reuseComponent/Title'
-import TableInfo from '../reuseComponent/TableInfo'
+// import TableInfo from '../reuseComponent/TableInfo'
 
 class EnterprisesComponent extends Component {
     constructor(props) {
@@ -15,12 +15,13 @@ class EnterprisesComponent extends Component {
             information : [],
             visible :false,
             textBuscar: '',
-            enterprisesOld:[]
+            enterprisesOld:[],
+            message:null
         }
 
         this.GetEnterprises = this.GetEnterprises.bind(this);
         this.information = this.information.bind(this);
-   
+        this.deleteEnterprise = this.deleteEnterprise.bind(this);
         this.filter = this.filter.bind(this);
         
     }
@@ -70,16 +71,34 @@ class EnterprisesComponent extends Component {
         })
         
     }
-
+    //función que obtiene el array de empresas
     GetEnterprises() {
         EnterprisesService.returnGet('/private/empleador')
             .then(response => {
                 this.setState({
                     enterprises : response.data,
+                    
                     enterprisesOld: response.data
                 })
             })
             .catch(error => console.log(error))
+    }
+    
+   
+
+    //función que elimina una empresa
+    deleteEnterprise(id){
+        
+        EnterprisesService.delete(`/private/empleador/${id}`)
+        .then(
+            response => {
+                this.setState({
+                    message: alert(`Se ha eliminado la empresa ${id} de forma correcta`) 
+                });
+                this.GetEnterprises();
+            }
+        )
+        
     }
 
     render() {
@@ -110,6 +129,8 @@ class EnterprisesComponent extends Component {
                             <tr id="headerInfo">
                                 <th>Nombre Empresa</th>
                                 <th>Rut</th>
+                                <th>Editar</th>
+                                <th>Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -119,6 +140,8 @@ class EnterprisesComponent extends Component {
                                 <tr  id="info" onClick={() =>this.information(enterprise.rut)} key={enterprise.rut}>
                                     <td >{enterprise.razonSocial}</td>
                                     <td >{enterprise.rut}</td>
+                                    <td><Button variant="outline-warning">Editar</Button></td>
+                                    <td><Button onClick={()=>this.deleteEnterprise(enterprise.rut)} variant="outline-danger">Eliminar</Button></td>
                                 </tr>
                         )
 
@@ -126,8 +149,30 @@ class EnterprisesComponent extends Component {
                         </tbody>
                     </Table >
                 </div>
-                
-                <TableInfo array={[this.state.enterprises]}/>
+                {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
+                {/* <div style={{marginTop:'2%'}}>
+                    <Table striped bordered hover size="sm">
+                        <thead>
+                            <tr id="headerInfo">
+                                <th>Nombre Empresa</th>
+                                <th>Rut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {
+                        this.state.enterprises.map(
+                            (enterprise,key) =>{
+                                return <TableInfo value={enterprise} myKey={key} />
+                            }
+                            
+                                
+                        )
+
+                        }
+                        </tbody>
+                    </Table >
+                </div>
+                   */}
                 
             
                 {visible && 
