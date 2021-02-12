@@ -23,6 +23,15 @@ class EnterprisesService{
             return axios.delete(`http://localhost:8080${ruta}`)
         }
     }
+    update(ruta){
+        if(AuthenticationService.isTokenActive()===''){
+            return axios.update(`http://localhost:8080${ruta}`)
+        }else{
+            let token = AuthenticationService.isTokenActive();
+            SecurityService.setupAxiosInterceptors('Bearer '+ token)
+            return axios.update(`http://localhost:8080${ruta}`)
+        }
+    }
 
     
 }
