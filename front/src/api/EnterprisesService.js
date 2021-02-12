@@ -33,6 +33,16 @@ class EnterprisesService{
         }
     }
 
+    create(ruta,cuerpo){
+        if(AuthenticationService.isTokenActive()===''){
+            return axios.post(`http://localhost:8080${ruta}`,cuerpo)
+        }else{
+            let token = AuthenticationService.isTokenActive();
+            SecurityService.setupAxiosInterceptors('Bearer '+ token)
+            return axios.post(`http://localhost:8080${ruta}`,cuerpo)
+        }
+    }
+
     
 }
 

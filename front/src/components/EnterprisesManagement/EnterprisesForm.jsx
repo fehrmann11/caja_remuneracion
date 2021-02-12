@@ -7,12 +7,14 @@ class EnterprisesForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: this.props.match.params.id,
+            rut: this.props.match.params.id,
             razonSocial: "",
             telefono: "",
             celular: "",
             email: "",
-            direccion: ""
+            direccion: "",
+            tipoEmpleador:"",
+            estado:false
         }
 
         this.onSubmit = this.onSubmit.bind(this)
@@ -21,17 +23,33 @@ class EnterprisesForm extends React.Component {
     }
     //función para enviar un formulario
     onSubmit(values){
-        Api.update(`/private/empleador/${this.state.id}`,{
-            razonSocial:values.razonSocial,
-            telefono: values.telefono,
-            celular: values.celular,
-            email: values.email,
-            direccion: values.direccion
-        })
-        .then(()=>{
-            this.props.history.push(`/enterprisesManagement`)
-        })
-        console.log(values)
+
+        if(this.state.estado){
+            console.log(values.rut,values.razonSocial,values.telefono,values.celular,values.email,values.direccion,values.tipoEmpleador)
+            Api.create('/private/empleador',{
+                rut:values.rut,
+                razonSocial:values.razonSocial,
+                telefono: values.telefono,
+                celular: values.celular,
+                email: values.email,
+                direccion: values.direccion,
+                tipoEmpleador:values.tipoEmpleador
+            }).then(()=>console.log(values.rut,values.razonSocial,values.telefono,values.celular,values.email,values.direccion,values.tipoEmpleador))
+            console.log("estado"+this.state.rut)
+        }else{
+            Api.update(`/private/empleador/${this.state.rut}`,{
+                razonSocial:values.razonSocial,
+                telefono: values.telefono,
+                celular: values.celular,
+                email: values.email,
+                direccion: values.direccion
+            })
+            .then(()=>{
+                this.props.history.push(`/enterprisesManagement`)
+            })
+        }
+        
+        
     }
 
     //función para validar datos del formulario (https://jasonwatmore.com/post/2019/04/10/react-formik-form-validation-example)
@@ -50,12 +68,20 @@ class EnterprisesForm extends React.Component {
     }
 
     componentDidMount(){
-        this.getData();
+        console.log(this.state.id)
+        if(this.state.rut==="-1"){
+            this.setState({
+                estado:true,
+                rut:''
+            })
+        }else{
+            this.getData();
+        }
     }
 
     //recuperar la data para ponerla en el formulario
     getData(){
-        Api.returnGet(`/private/empleador/${this.state.id}`)
+        Api.returnGet(`/private/empleador/${this.state.rut}`)
         .then(response => this.setState({
             razonSocial: response.data.razonSocial,
             telefono: response.data.telefono,
@@ -65,9 +91,10 @@ class EnterprisesForm extends React.Component {
 
         }))
     }
+    
 
     render() {
-        let {razonSocial,telefono,celular,email,direccion} = this.state;
+        let {razonSocial,telefono,celular,email,direccion,rut,tipoEmpleador} = this.state;
         return (
             <div>
                 <h1 style={{textAlign:'center'}}>Formulario Empleadores</h1>
@@ -79,7 +106,9 @@ class EnterprisesForm extends React.Component {
                         telefono,
                         celular,
                         email,
-                        direccion
+                        direccion,
+                        rut,
+                        tipoEmpleador
                     }}
                     onSubmit={this.onSubmit}
                     validate={this.validate}
@@ -120,6 +149,20 @@ class EnterprisesForm extends React.Component {
                                        
                                         <Field type="text" style={{marginLeft:'5%'}} className="form-control" name="direccion" required/>
                                     </div>
+                                    {this.state.estado && 
+                                    <div className="row container">
+                                        <div className="col-md-6">
+                                            <label className="form-label">Rut de la empresa</label>
+                                            <br/>
+                                            <Field type="text" className="form-control" name="rut"/>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <label className="form-label">Tipo empresa</label>
+                                            <br/>
+                                            <Field type="text" className="form-control" name="tipoEmpleador"/>
+                                        </div>
+                                    </div>
+                                    }
                                     <div className="container" style={{marginLeft:'35%'}}> 
                                     <Button  type="submit">Save</Button>
                                     </div>

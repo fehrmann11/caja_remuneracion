@@ -24,6 +24,7 @@ class EnterprisesComponent extends Component {
         this.deleteEnterprise = this.deleteEnterprise.bind(this);
         this.filter = this.filter.bind(this);
         this.updateEnterprise = this.updateEnterprise.bind(this);
+        this.addEnterprise = this.addEnterprise.bind(this);
         
     }
 
@@ -104,8 +105,13 @@ class EnterprisesComponent extends Component {
 
     //función que actualiza una empresa
     updateEnterprise(id){
-        console.log(id)
+        
         this.props.history.push(`/enterprisesManagement/${id}`)
+    }
+
+    //función que agrega una empresa
+    addEnterprise(){
+        this.props.history.push(`/enterprisesManagement/-1`)
     }
 
     render() {
@@ -121,7 +127,7 @@ class EnterprisesComponent extends Component {
 
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="mr-auto">
-                                <Button variant="outline-primary">agregar empleador</Button>
+                                <Button onClick={this.addEnterprise} variant="outline-primary">agregar empleador</Button>
                             </Nav>
                             <Form inline>
                                 <FormControl name="text" value={this.state.text} onChange={(text) => this.filter(text)} type="text" placeholder="Buscar" className="mr-sm-2" />
