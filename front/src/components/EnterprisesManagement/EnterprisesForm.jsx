@@ -21,6 +21,16 @@ class EnterprisesForm extends React.Component {
     }
     //función para enviar un formulario
     onSubmit(values){
+        Api.update(`/private/empleador/${this.state.id}`,{
+            razonSocial:values.razonSocial,
+            telefono: values.telefono,
+            celular: values.celular,
+            email: values.email,
+            direccion: values.direccion
+        })
+        .then(()=>{
+            this.props.history.push(`/enterprisesManagement`)
+        })
         console.log(values)
     }
 

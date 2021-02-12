@@ -23,13 +23,13 @@ class EnterprisesService{
             return axios.delete(`http://localhost:8080${ruta}`)
         }
     }
-    update(ruta){
+    update(ruta,cuerpo){
         if(AuthenticationService.isTokenActive()===''){
-            return axios.update(`http://localhost:8080${ruta}`)
+            return axios.put(`http://localhost:8080${ruta}`,cuerpo)
         }else{
             let token = AuthenticationService.isTokenActive();
             SecurityService.setupAxiosInterceptors('Bearer '+ token)
-            return axios.update(`http://localhost:8080${ruta}`)
+            return axios.put(`http://localhost:8080${ruta}`,cuerpo)
         }
     }
 
