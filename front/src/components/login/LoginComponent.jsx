@@ -26,12 +26,10 @@ const LoginComponent = () => {
 
     //Esta función guarda el usuario y contraseña en las variables userName y password
     const handleChangeUsername = (event) => {
-        console.log(userName)
         setUserName(event.target.value);
     }
 
     const handleChangePassword = (event) =>{
-        console.log(password)
         setPassword(event.target.value)
     }
 

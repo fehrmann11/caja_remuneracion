@@ -6,12 +6,15 @@ import AuthenticationService from './AuthenticationService';
 si lo está envia los props del router que se ejecutan en el 
 componente TodoApp, sino redirecciona a login*/
 
-const AuthenticatedRoute = () => {
-    if(AuthenticationService.isUserLoggedIn()){
-        return <Route {...this.props}/>
-    }else{
-        return <Redirect to="/login"/>
+const AuthenticatedRoute = ({ path,component }) => {
+
+    if (AuthenticationService.isUserLoggedIn()) {
+        console.log(path)
+        return <Route paht={path} component={component} />
+    } else {
+        return <Redirect to="/login" />
     }
+
 }
 
 
