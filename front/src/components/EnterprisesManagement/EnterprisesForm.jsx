@@ -34,8 +34,9 @@ class EnterprisesForm extends React.Component {
                 email: values.email,
                 direccion: values.direccion,
                 tipoEmpleador:values.tipoEmpleador
-            }).then(()=>console.log(values.rut,values.razonSocial,values.telefono,values.celular,values.email,values.direccion,values.tipoEmpleador))
-            console.log("estado"+this.state.rut)
+            }).then(()=>{
+                this.props.history.push(`/enterprisesManagement`)
+            })
         }else{
             Api.update(`/private/empleador/${this.state.rut}`,{
                 razonSocial:values.razonSocial,
