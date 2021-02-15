@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import SecurityService from '../../api/SecurityService'
@@ -6,8 +5,8 @@ import { Link } from 'react-router-dom'
 import './HeaderComponent.css'
 import AuthenticationService from '../Authentication/AuthenticationService'
 
-class HeaderComponent extends Component {
-    render() {
+const HeaderComponent = () =>{
+    
         //esta variable muestra la información si esta logeado
         const isUserLoggedIn = SecurityService.isUserLoggedIn();
         return (
@@ -45,7 +44,7 @@ class HeaderComponent extends Component {
             </Navbar>
 
         )
-    }
 }
+
 
 export default withRouter(HeaderComponent);
