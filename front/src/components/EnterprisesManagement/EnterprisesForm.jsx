@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { Button } from 'react-bootstrap';
 import Api from '../../api/EnterprisesService';
 import {useHistory,useRouteMatch} from 'react-router-dom';
+import * as Yup from 'yup';
 
 const EnterprisesForm = () => {
     const match = useRouteMatch('/enterprisesManagement/:id');
@@ -58,12 +59,14 @@ const EnterprisesForm = () => {
         } else if (values.razonSocial.length < 5) {
             errors.razonSocial = "Agrega una razón social válida"
         }
-        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-            errors.email = "test error";
-        }
 
         return errors;
     }
+
+    //otra validación
+    const SignupSchema = Yup.object().shape({
+        email: Yup.string().email('Invalid email').required('Required'),
+      });
 
 
     useEffect(() => {
@@ -106,11 +109,12 @@ const EnterprisesForm = () => {
                     }}
                     onSubmit={onSubmit}
                     validate={validate}
+                    validationSchema={SignupSchema}
                     enableReinitialize={true}
 
                 >
                     {
-                        (props) => (
+                        ({ errors, touched }) => (
                             <div className="container" >
                                 <Form className="row g-3 needs-validation" noValidate>
                                     <div style={{ marginLeft: '5%' }} className="col-md-12">
@@ -135,7 +139,8 @@ const EnterprisesForm = () => {
                                         <label className="form-label">Email</label>
                                         <br></br>
 
-                                        <Field type="text" className="form-control" name="email" required />
+                                        <Field type="email" className="form-control" name="email" required />
+                                        {errors.email && touched.email ? <div>{errors.email}</div> : null}
                                     </div>
                                     <div className="col-md-12">
                                         <label style={{ marginLeft: '5%' }} className="form-label">Dirección</label>

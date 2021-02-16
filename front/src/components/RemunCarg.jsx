@@ -9,6 +9,7 @@ import AuthenticatedRoute from './Authentication/AuthenticatedRoute';
 import ErrorComponent from './Error404/ErrorComponent';
 import EnterprisesComponent from './EnterprisesManagement/EnterprisesComponent';
 import EnterprisesForm from './EnterprisesManagement/EnterprisesForm';
+import Test from './test';
 
 const RemunCarg = () => {
     return(
@@ -17,6 +18,7 @@ const RemunCarg = () => {
                 <HeaderComponent/>
                 <Switch>
                     <Route path="/" exact component={InitialScreen}/>
+                    <Route path="/test" exact component={Test}/>
                     <Route path="/login" exact component={LoginComponent}/>
                     <AuthenticatedRoute path="/management" component={WelcomeComponent}/>
                     <AuthenticatedRoute path="/enterprisesManagement/:id" component={EnterprisesForm}/>

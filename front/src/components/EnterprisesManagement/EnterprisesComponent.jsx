@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import EnterprisesService from '../../api/EnterprisesService';
 import './enterprise.css';
 import { useHistory } from 'react-router-dom'
@@ -17,10 +17,11 @@ const EnterprisesComponent = () => {
     const [enterprisesOld, setEnterprisesOld] = useState([]);
     const [message, setMessage] = useState(null);
     let history = useHistory();
+    const search = useRef(null);
 
 
-    const handleChange = event => {
-        setTextBuscar(event.target.value);
+    const handleChange = () => {
+        setTextBuscar(search.current.value);
     }
 
 
@@ -94,6 +95,7 @@ const EnterprisesComponent = () => {
     const addEnterprise = () => {
         history.push(`/enterprisesManagement/-1`)
     }
+    
 
 
     let vis = visible;
@@ -112,7 +114,7 @@ const EnterprisesComponent = () => {
                             <Button onClick={addEnterprise} variant="outline-primary">agregar empleador</Button>
                         </Nav>
                         <Form inline>
-                            <FormControl name="text" value={textBuscar} onChange={handleChange} type="text" placeholder="Buscar" className="mr-sm-2" />
+                            <FormControl name="text" value={textBuscar} ref={search}  onChange={handleChange} type="text" placeholder="Buscar" className="mr-sm-2" />
 
                         </Form>
                     </Navbar.Collapse>
