@@ -1,7 +1,7 @@
-import React,{ useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import EnterprisesService from '../../api/EnterprisesService';
 import './enterprise.css';
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Form, FormControl, Button, Navbar, Nav, Table } from 'react-bootstrap'
 
 //import componentes reutilizables
@@ -10,16 +10,16 @@ import Title from '../reuseComponent/Title'
 
 //buscar por ... nombre, buscar por rut ... 
 const EnterprisesComponent = () => {
-    const [enterprises,setEnterprises] = useState([]);
-    const [informationT,setInformationT] = useState([]);
-    const [visible,setVisible] = useState(false);
-    const [textBuscar,setTextBuscar] = useState("");
-    const [enterprisesOld,setEnterprisesOld] = useState([]);
-    const [message,setMessage] = useState(null);
+    const [enterprises, setEnterprises] = useState([]);
+    const [informationT, setInformationT] = useState([]);
+    const [visible, setVisible] = useState(false);
+    const [textBuscar, setTextBuscar] = useState("");
+    const [enterprisesOld, setEnterprisesOld] = useState([]);
+    const [message, setMessage] = useState(null);
     let history = useHistory();
-    
 
-    const handleChange = event =>{
+
+    const handleChange = event => {
         setTextBuscar(event.target.value);
     }
 
@@ -28,14 +28,14 @@ const EnterprisesComponent = () => {
     //mostrar la información de la empresa al hacer clic
     const information = (id) => {
         EnterprisesService.returnGet(`/private/empleador/${id}`)
-        .then(response=>{
-            setInformationT(response.data);
-            setVisible(true);
-        })
+            .then(response => {
+                setInformationT(response.data);
+                setVisible(true);
+            })
     }
 
     //función que obtiene el array de empresas
-    const GetEnterprises = () =>{
+    const GetEnterprises = () => {
         EnterprisesService.returnGet('/private/empleador')
             .then(response => {
                 setEnterprises(response.data);
@@ -45,53 +45,53 @@ const EnterprisesComponent = () => {
     }
 
     //para llamar a la API
-    useEffect(()=>{
+    useEffect(() => {
         GetEnterprises();
-    },[])
+    }, [])
 
     //use efect del buscador
-    useEffect(()=>{
-        if( Number.isInteger(parseInt(textBuscar[0])) ){
+    useEffect(() => {
+        if (Number.isInteger(parseInt(textBuscar[0]))) {
             EnterprisesService.returnGet(`/private/empleador/busqueda?idRut=${textBuscar}`)
-        .then(response=>{
-            let newData = response.data
-            setEnterprises(newData)
-        })
+                .then(response => {
+                    let newData = response.data
+                    setEnterprises(newData)
+                })
         }
         //Si es nombre de la empresa
-        else if(textBuscar===''){
+        else if (textBuscar === '') {
             setEnterprises(enterprisesOld);
         }
-        else{
+        else {
             EnterprisesService.returnGet(`/private/empleador/busqueda?name=${textBuscar}`)
-            .then(response=>{
-                let newData = response.data
-                setEnterprises(newData)
-            })
+                .then(response => {
+                    let newData = response.data
+                    setEnterprises(newData)
+                })
         }
-    },[textBuscar,enterprisesOld])
+    }, [textBuscar, enterprisesOld])
 
     //función que elimina una empresa
 
-    const deleteEnterprise = (id) =>{
-        
+    const deleteEnterprise = (id) => {
+
         EnterprisesService.delete(`/private/empleador/${id}`)
-        .then(
-            () => {
-                let mensaje = alert(`Se ha eliminado la empresa ${id} de forma correcta`)
-                setMessage(mensaje)
-                GetEnterprises();
-            }
-        )
+            .then(
+                () => {
+                    let mensaje = alert(`Se ha eliminado la empresa ${id} de forma correcta`)
+                    setMessage(mensaje)
+                    GetEnterprises();
+                }
+            )
     }
 
     //función que actualiza una empresa
-    const updateEnterprise = (id) =>{
+    const updateEnterprise = (id) => {
         history.push(`/enterprisesManagement/${id}`)
     }
 
     //función que agrega una empresa
-    const addEnterprise = ()=>{
+    const addEnterprise = () => {
         history.push(`/enterprisesManagement/-1`)
     }
 
@@ -101,8 +101,8 @@ const EnterprisesComponent = () => {
 
     return (
         <div className="container">
-            <Title titulo="empleadores"/>
-            
+            <Title titulo="empleadores" />
+
             <div id="buscador">
                 <Navbar bg="light" expand="lg">
 
@@ -113,12 +113,12 @@ const EnterprisesComponent = () => {
                         </Nav>
                         <Form inline>
                             <FormControl name="text" value={textBuscar} onChange={handleChange} type="text" placeholder="Buscar" className="mr-sm-2" />
-                           
+
                         </Form>
                     </Navbar.Collapse>
                 </Navbar>
             </div>
-            <div style={{marginTop:'2%'}}>
+            <div style={{ marginTop: '2%' }}>
                 <Table striped bordered hover size="sm">
                     <thead>
                         <tr id="headerInfo">
@@ -129,18 +129,18 @@ const EnterprisesComponent = () => {
                         </tr>
                     </thead>
                     <tbody>
-                    {
-                    enterprises.map(
-                        enterprise =>
-                            <tr  id="info" onClick={() =>information(enterprise.rut)} key={enterprise.rut}>
-                                <td >{enterprise.razonSocial}</td>
-                                <td >{enterprise.rut}</td>
-                                <td><Button onClick={()=>updateEnterprise(enterprise.rut)} variant="outline-warning">Editar</Button></td>
-                                <td><Button onClick={()=>deleteEnterprise(enterprise.rut)} variant="outline-danger">Eliminar</Button></td>
-                            </tr>
-                    )
+                        {
+                            enterprises.map(
+                                enterprise =>
+                                    <tr id="info" onClick={() => information(enterprise.rut)} key={enterprise.rut}>
+                                        <td >{enterprise.razonSocial}</td>
+                                        <td >{enterprise.rut}</td>
+                                        <td><Button onClick={() => updateEnterprise(enterprise.rut)} variant="outline-warning">Editar</Button></td>
+                                        <td><Button onClick={() => deleteEnterprise(enterprise.rut)} variant="outline-danger">Eliminar</Button></td>
+                                    </tr>
+                            )
 
-                    }
+                        }
                     </tbody>
                 </Table >
             </div>
@@ -168,22 +168,39 @@ const EnterprisesComponent = () => {
                 </Table >
             </div>
                */}
-            
+
             {/*https://codepen.io/sowmyaseshadri/pen/PdajzN */}
-            {vis && 
-            
-            <div>
-                <ul>
-                    <li>Razón Social: {inf.razonSocial}</li>
-                    <li> {inf.rut}</li>
-                    <li>{inf.celular}</li>
-                    <li>{inf.direccion}</li>
-                    <li>{inf.email}</li>
-                    <li>{inf.telefono}</li>
-                    <li>{inf.tipoEmpleador}</li>
-                </ul>
-            </div>
-            
+            {vis &&
+
+                <div className="contenedor">
+                    <div className="items">
+                        <div className="items-head">
+                            <p>{inf.razonSocial}</p>
+                            <hr />
+                        </div>
+                        <div className="items-body">
+                            <div className="itemss-body-content">
+                                <span><strong>Rut: </strong>{inf.rut}</span>
+                            </div>
+                            <div className="itemss-body-content">
+                                <span><strong>Celular: </strong>{inf.celular}</span>
+                            </div>
+                            <div className="itemss-body-content">
+                                <span><strong>Dirección:  </strong>{inf.direccion}</span>
+                            </div>
+                            <div className="itemss-body-content">
+                                <span><strong>Email: </strong>{inf.email}</span>
+                            </div>
+                            <div className="itemss-body-content">
+                                <span><strong>Teléfono: </strong>{inf.telefono}</span>
+                            </div>
+                            <div className="itemss-body-content">
+                                <span><strong>Tipo de Empleador: </strong> {inf.tipoEmpleador}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             }
         </div>
     )
