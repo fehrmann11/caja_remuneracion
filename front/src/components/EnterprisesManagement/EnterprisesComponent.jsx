@@ -169,12 +169,13 @@ const EnterprisesComponent = () => {
             </div>
                */}
             
-        
+            {/*https://codepen.io/sowmyaseshadri/pen/PdajzN */}
             {vis && 
+            
             <div>
                 <ul>
-                    <li>{inf.razonSocial}</li>
-                    <li>{inf.rut}</li>
+                    <li>Razón Social: {inf.razonSocial}</li>
+                    <li> {inf.rut}</li>
                     <li>{inf.celular}</li>
                     <li>{inf.direccion}</li>
                     <li>{inf.email}</li>

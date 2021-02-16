@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useRef } from 'react';
 import './LoginComponent.css'
 import SecurityService from '../../api/SecurityService'
 import {useHistory } from 'react-router-dom';
@@ -8,6 +8,8 @@ const LoginComponent = () => {
     const [userName, setUserName] = useState("ingrese su usuario");
     const [password, setPassword] = useState("ingrese su contraseña");
     const [hasLoginFailed, setHasLoginFailed] = useState(false);
+    const us = useRef(null);
+    const pw = useRef(null);
     let history = useHistory();
 
 
@@ -25,12 +27,9 @@ const LoginComponent = () => {
     }
 
     //Esta función guarda el usuario y contraseña en las variables userName y password
-    const handleChangeUsername = (event) => {
-        setUserName(event.target.value);
-    }
-
-    const handleChangePassword = (event) =>{
-        setPassword(event.target.value)
+    const handleChange = () => {
+        setUserName(us.current.value);
+        setPassword(pw.current.value);
     }
 
     //Formulario
@@ -51,14 +50,16 @@ const LoginComponent = () => {
                         className="fadeIn second"
                         name="userName"
                         placeholder={userName}
-                        onChange={handleChangeUsername} />
+                        ref={us}
+                        onChange={handleChange} />
 
                     <input type="password"
                         id="password"
                         className="fadeIn third"
                         name="password"
                         placeholder={password}
-                        onChange={handleChangePassword} />
+                        ref={pw}
+                        onChange={handleChange} />
 
                     <button className="btn btn-primary" onClick={loginClicked}>iniciar sesión</button>
 
