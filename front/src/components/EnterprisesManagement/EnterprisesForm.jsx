@@ -120,7 +120,7 @@ const EnterprisesForm = () => {
                                     <div style={{ marginLeft: '5%' }} className="col-md-12">
                                         <label className="form-label">Razón Social</label>
                                         <br></br>
-                                        <Field type="text" name="razonSocial" className="form-control" required />
+                                        <Field placeholder="Nombre de la empresa 'obligatorio'..." type="text" name="razonSocial" className="form-control" required />
                                         <ErrorMessage name="razonSocial" component="div" className="alert alert-danger" />
                                     </div>
 
@@ -140,7 +140,7 @@ const EnterprisesForm = () => {
                                         <br></br>
 
                                         <Field type="email" className="form-control" name="email" required />
-                                        {errors.email && touched.email ? <div>{errors.email}</div> : null}
+                                        {errors.email && touched.email ? <div className="alert alert-danger">{errors.email}</div> : null}
                                     </div>
                                     <div className="col-md-12">
                                         <label style={{ marginLeft: '5%' }} className="form-label">Dirección</label>
