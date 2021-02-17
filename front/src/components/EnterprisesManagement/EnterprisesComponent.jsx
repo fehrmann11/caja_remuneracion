@@ -173,8 +173,9 @@ const EnterprisesComponent = () => {
 
             {/*https://codepen.io/sowmyaseshadri/pen/PdajzN */}
             {vis &&
-
+                
                 <div className="contenedor">
+                    {console.log(informationT.tipoEmpleador)}
                     <div className="items">
                         <div className="items-head">
                             <p>{inf.razonSocial}</p>
@@ -194,11 +195,12 @@ const EnterprisesComponent = () => {
                                 <span><strong>Email: </strong>{inf.email}</span>
                             </div>
                             <div className="itemss-body-content">
-                                <span><strong>Teléfono: </strong>{inf.telefono}</span>
+                                <strong>Tipo de empresa:</strong> {informationT.tipoEmpleador}
                             </div>
                             <div className="itemss-body-content">
-                                <span><strong>Tipo de Empleador: </strong> {inf.tipoEmpleador}</span>
+                                <span><strong>Teléfono: </strong>{inf.telefono} </span>
                             </div>
+                            
                         </div>
                     </div>
                 </div>

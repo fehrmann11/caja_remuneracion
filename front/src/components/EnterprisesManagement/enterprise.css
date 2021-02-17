@@ -31,11 +31,11 @@ li{
 /*información*/
 .contenedor {
     border: 1px solid black;
-    position: absolute;
+    position: fixed;
     margin: auto;
     display: grid;
     place-items: center;
-    background-color:  #128CFC;
+    background-color:  white;
   }
 
   .items {

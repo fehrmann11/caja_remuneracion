@@ -13,7 +13,7 @@ const EnterprisesForm = () => {
     const [celular, setCelular] = useState("");
     const [email, setEmail] = useState("");
     const [direccion, setDireccion] = useState("");
-    const [tipoEmpleador] = useState("");
+    const [tipoEmpleador] = useState("1");
     const [estado, setEstado] = useState(false);
     const [SignupSchema,setSignupSchema] = useState(Yup.object().shape({
         email: Yup.string().email('Ingrese un correo válido').required('Este campo es obligatorio'),
@@ -27,6 +27,7 @@ const EnterprisesForm = () => {
 
         if (estado) {
             //crear un nuevo empleador
+            console.log(values)
             Api.create('/private/empleador', {
                 rut: values.rut,
                 razonSocial: values.razonSocial,
@@ -64,45 +65,24 @@ const EnterprisesForm = () => {
         return errors;
     }
 
-   
+   /*este useEffect pregunta si estado es verdadero, 
+   si lo es también pone restricciones tanto a rut como a tipo de empleador*/
     useEffect(()=>{
         if(estado){
             setSignupSchema(Yup.object().shape({
                 email: Yup.string().email('Ingrese un correo válido').required('Este campo es obligatorio'),
                 telefono: Yup.string().required('Este campo es obligatorio'),
-                razonSocial: Yup.string().required('Este campo es obligatorio'),
-                tipoEmpleador: Yup.string().required('Este campo es obligatorio'),
-                rut:Yup.string().required('Este campo es obligatorio')
+                razonSocial: Yup.string().matches(/^[a-z]+$/i,'solo letras').required('Este campo es obligatorio'),
+                rut:Yup.string().min(11,'Rut inválido').max(13, 'Muchos carácteres').required('Este campo es obligatorio')
               }))
         }
     },[estado])
 
-    // //otra validación
-    // let SignupSchema
-    // if(estado){
-    //     SignupSchema = Yup.object().shape({
-    //     email: Yup.string().email('Ingrese un correo válido').required('Este campo es obligatorio'),
-    //     telefono: Yup.string().required('Este campo es obligatorio'),
-    //     razonSocial: Yup.string().required('Este campo es obligatorio'),
-        
-    //     tipoEmpleador: Yup.string().required('Este campo es obligatorio'),
-    //     rut:Yup.string().required('Este campo es obligatorio')
-    //   });
-    // }else if(estado===false){
-    //     console.log("entre")
-    //     SignupSchema = Yup.object().shape({
-    //         email: Yup.string().email('Ingrese un correo válido').required('Este campo es obligatorio'),
-    //         telefono: Yup.string().required('Este campo es obligatorio'),
-    //         razonSocial: Yup.string().required('Este campo es obligatorio'),
-            
-    //         //tipoEmpleador: Yup.string().required('Este campo es obligatorio'),
-    //        // rut:Yup.string().required('Este campo es obligatorio')
-    //       });
-    // }
-
-      
 
 
+    /*Este useEffect pregunta si la id es -1, si lo es rut lo establece en vacío
+    y procedemos a crear un nuevo empleador, sino simplemente hacemos la petición
+    a la API*/
     useEffect(() => {
         if (rut === "-1") {
             setEstado(true);
@@ -195,7 +175,11 @@ const EnterprisesForm = () => {
                                             <div className="col-md-6">
                                                 <label className="form-label">Tipo empresa</label>
                                                 <br />
-                                                <Field type="text" className="form-control" name="tipoEmpleador" />
+                                                <Field as="select"  name="tipoEmpleador">
+                                                    <option value="1">EMPRESA</option>
+                                                    <option value="2">INDEPENDIENTE</option>
+
+                                                </Field>
                                             </div>
                                         </div>
                                     }
