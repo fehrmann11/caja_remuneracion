@@ -17,10 +17,10 @@ const EnterprisesForm = () => {
     const [tipoEmpleador] = useState("1");
     const [estado, setEstado] = useState(false);
     const [SignupSchema, setSignupSchema] = useState(Yup.object().shape({
-        email: Yup.string().email('Ingrese un correo válido').required('Este campo es obligatorio'),
+        email: Yup.string().max(50,'Limite 50 caracteres').email('Ingrese un correo válido').required('Este campo es obligatorio'),
         telefono: Yup.string().min(4, 'Ingresa un número válido').max(10, 'Número incorrecto').matches(/^([0-9])*$/, 'Solo números y sin espacios').required('Este campo es obligatorio'),
         razonSocial: Yup.string().trim().matches(/^[a-z\s]+$/i, 'solo letras').required('Este campo es obligatorio'),
-        celular: Yup.string().matches(/^([0-9])*$/, 'Solo números y sin espacios'),
+        celular: Yup.string().min(4, 'Ingresa un número válido').max(10, 'Número incorrecto').matches(/^([0-9])*$/, 'Solo números y sin espacios'),
         direccion: Yup.string().trim()
     }))
     let history = useHistory();
@@ -80,7 +80,7 @@ const EnterprisesForm = () => {
                 telefono: Yup.string().min(4, 'Ingresa un número válido').max(10, 'Número incorrecto').matches(/^([0-9])*$/, 'Solo números y sin espacios').required('Este campo es obligatorio'),
                 razonSocial: Yup.string().trim().matches(/^[a-z\s]+$/i, 'solo letras').required('Este campo es obligatorio'),
                 rut: Yup.string().min(11, 'Rut inválido').max(13, 'Muchos carácteres').required('Este campo es obligatorio'),
-                celular: Yup.string().matches(/^([0-9])*$/, 'Solo números y sin espacios'),
+                celular: Yup.string().min(4, 'Ingresa un número válido').max(10, 'Número incorrecto').matches(/^([0-9])*$/, 'Solo números y sin espacios'),
                 direccion: Yup.string().trim()
             }))
 
@@ -138,51 +138,44 @@ const EnterprisesForm = () => {
                 >
                     {
                         ({ errors, touched }) => (
-                            <div className="container" >
+                            <div className="form" >
                                 <Form className="row g-3 needs-validation" noValidate>
-                                    <div style={{ marginLeft: '5%' }} className="col-md-12">
+                                    <div  className="col-md-12">
                                         <label className="form-label">Razón Social</label>
-                                        <br></br>
-                                        <Field placeholder="Nombre de la empresa *" type="text" name="razonSocial" className="form-control" required />
+                                        <Field placeholder="Nombre de la empresa *" type="text" name="razonSocial" className="field" required />
                                         {errors.razonSocial && touched.razonSocial ? <div className="alert alert-danger">{errors.razonSocial}</div> : null}
                                     </div>
 
-                                    <div className="col-md-4">
+                                    <div className="col-md-12">
                                         <label className="form-label">Teléfono</label>
-                                        <br></br>
-                                        <Field type="text" placeholder="Telefono *" name="telefono" className="form-control" required />
+                                        <Field type="text" placeholder="Telefono *" name="telefono" className="field" required />
                                         {errors.telefono && touched.telefono ? <div className="alert alert-danger">{errors.telefono}</div> : null}
                                     </div>
-                                    <div className="col-md-4">
+                                    <div className="col-md-12">
                                         <label className="form-label">Celular</label>
-                                        <br></br>
-                                        <Field placeholder="Celular" type="text" className="form-control" name="celular" required />
+                                        <Field placeholder="Celular" type="text" className="field" name="celular" required />
                                         {errors.celular && touched.celular ? <div className="alert alert-danger">{errors.celular}</div> : null}
                                     </div>
-                                    <div className="col-md-4">
+                                    <div className="col-md-12">
                                         <label className="form-label">Email</label>
-                                        <br></br>
-
-                                        <Field type="email" placeholder="ejemplo: vass@gmail.com * " className="form-control" name="email" required />
+                                        <Field type="text" placeholder="ejemplo: vass@gmail.com * " className="field" name="email" required />
                                         {errors.email && touched.email ? <div className="alert alert-danger">{errors.email}</div> : null}
                                     </div>
                                     <div className="col-md-12">
-                                        <label style={{ marginLeft: '5%' }} className="form-label">Dirección</label>
-                                        <br></br>
-
-                                        <Field type="text" placeholder="Dirección" style={{ marginLeft: '5%' }} className="form-control" name="direccion" required />
+                                        <label  className="form-label">Dirección</label>
+                                        <Field type="text" placeholder="Dirección"  className="field" name="direccion" required />
                                     </div>
                                     {estado &&
-                                        <div className="row container">
+                                        <div style={{marginTop:'16px'}} className="row container">
                                             <div className="col-md-6">
-                                                <label className="form-label">Rut de la empresa</label>
-                                                <br />
-                                                <Field placeholder="ejemplo:12.345.678-9 *" type="text" className="form-control" name="rut" />
+                                                <label className="form-label">Rut: </label>
+                                                <Field style={{marginLeft:'16px'}} placeholder="ejemplo:12.345.678-9 *" type="text" className="field" name="rut" />
                                                 {errors.rut && touched.rut ? <div className="alert alert-danger">{errors.rut}</div> : null}
                                             </div>
                                             <div className="col-md-6">
-                                                <label className="form-label">Tipo empresa</label>
-                                                <br />
+                                                <label  className="form-label">Tipo empresa</label>
+                                                <br/>
+                                                
                                                 <Field as="select" name="tipoEmpleador">
                                                     <option value="1">EMPRESA</option>
                                                     <option value="2">INDEPENDIENTE</option>

@@ -147,36 +147,11 @@ const EnterprisesComponent = () => {
                 </Table >
             </div>
             {message && <div className="alert alert-success">{message}</div>}
-            {/* <div style={{marginTop:'2%'}}>
-                <Table striped bordered hover size="sm">
-                    <thead>
-                        <tr id="headerInfo">
-                            <th>Nombre Empresa</th>
-                            <th>Rut</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {
-                    this.state.enterprises.map(
-                        (enterprise,key) =>{
-                            return <TableInfo value={enterprise} myKey={key} />
-                        }
-                        
-                            
-                    )
-
-                    }
-                    </tbody>
-                </Table >
-            </div>
-               */}
-
             {/*https://codepen.io/sowmyaseshadri/pen/PdajzN */}
             {vis &&
                 
                 <div className="contenedor">
-                    {console.log(informationT.tipoEmpleador)}
-                    <div className="items">
+                  <div className="items">
                         <div className="items-head">
                             <p>{inf.razonSocial}</p>
                             <hr />

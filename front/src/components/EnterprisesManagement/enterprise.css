@@ -83,12 +83,27 @@ li{
     border: 1px solid #0B5AA2;
   }
 
-  /*border: 1px solid black;
-    
-    position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
-    margin: auto;
-    
-    display: grid;
-    place-items: center;
-    background-color:  #128CFC;*/
+/*formulario css*/
+.form{
+	width:100%;
+	padding:16px;
+	border-radius:10px;
+	margin:auto;
+	background-color:#ccc;
+}
+
+.form label{
+  width:10%;
+	font-weight:bold;
+	display:inline-block;
+}
+
+.field{
+  width:180px;
+	padding:3px 10px;
+	border:1px solid #f6f6f6;
+	border-radius:3px;
+	background-color:#f6f6f6;
+	margin:8px 0;
+	display:inline-block;
+}
