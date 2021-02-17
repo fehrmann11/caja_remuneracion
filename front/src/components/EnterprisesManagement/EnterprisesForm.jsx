@@ -15,6 +15,11 @@ const EnterprisesForm = () => {
     const [direccion, setDireccion] = useState("");
     const [tipoEmpleador] = useState("");
     const [estado, setEstado] = useState(false);
+    const [SignupSchema,setSignupSchema] = useState(Yup.object().shape({
+        email: Yup.string().email('Ingrese un correo válido').required('Este campo es obligatorio'),
+        telefono: Yup.string().required('Este campo es obligatorio'),
+        razonSocial: Yup.string().required('Este campo es obligatorio')
+      }))
     let history = useHistory();
 
     //función para enviar un formulario
@@ -54,19 +59,48 @@ const EnterprisesForm = () => {
     //función para validar datos del formulario (https://jasonwatmore.com/post/2019/04/10/react-formik-form-validation-example)
     const validate = (values) => {
         let errors = {}
-        if (!values.razonSocial) {
-            errors.razonSocial = 'Agrega una razón social'
-        } else if (values.razonSocial.length < 5) {
-            errors.razonSocial = "Agrega una razón social válida"
-        }
+       
 
         return errors;
     }
 
-    //otra validación
-    const SignupSchema = Yup.object().shape({
-        email: Yup.string().email('Invalid email').required('Required'),
-      });
+   
+    useEffect(()=>{
+        if(estado){
+            setSignupSchema(Yup.object().shape({
+                email: Yup.string().email('Ingrese un correo válido').required('Este campo es obligatorio'),
+                telefono: Yup.string().required('Este campo es obligatorio'),
+                razonSocial: Yup.string().required('Este campo es obligatorio'),
+                tipoEmpleador: Yup.string().required('Este campo es obligatorio'),
+                rut:Yup.string().required('Este campo es obligatorio')
+              }))
+        }
+    },[estado])
+
+    // //otra validación
+    // let SignupSchema
+    // if(estado){
+    //     SignupSchema = Yup.object().shape({
+    //     email: Yup.string().email('Ingrese un correo válido').required('Este campo es obligatorio'),
+    //     telefono: Yup.string().required('Este campo es obligatorio'),
+    //     razonSocial: Yup.string().required('Este campo es obligatorio'),
+        
+    //     tipoEmpleador: Yup.string().required('Este campo es obligatorio'),
+    //     rut:Yup.string().required('Este campo es obligatorio')
+    //   });
+    // }else if(estado===false){
+    //     console.log("entre")
+    //     SignupSchema = Yup.object().shape({
+    //         email: Yup.string().email('Ingrese un correo válido').required('Este campo es obligatorio'),
+    //         telefono: Yup.string().required('Este campo es obligatorio'),
+    //         razonSocial: Yup.string().required('Este campo es obligatorio'),
+            
+    //         //tipoEmpleador: Yup.string().required('Este campo es obligatorio'),
+    //        // rut:Yup.string().required('Este campo es obligatorio')
+    //       });
+    // }
+
+      
 
 
     useEffect(() => {
@@ -121,13 +155,15 @@ const EnterprisesForm = () => {
                                         <label className="form-label">Razón Social</label>
                                         <br></br>
                                         <Field placeholder="Nombre de la empresa 'obligatorio'..." type="text" name="razonSocial" className="form-control" required />
-                                        <ErrorMessage name="razonSocial" component="div" className="alert alert-danger" />
+                                        {errors.razonSocial && touched.razonSocial ? <div className="alert alert-danger">{errors.razonSocial}</div> : null}
+                                        {/*<ErrorMessage name="razonSocial" component="div" className="alert alert-danger" />*/}
                                     </div>
 
                                     <div className="col-md-4">
                                         <label className="form-label">Teléfono</label>
                                         <br></br>
                                         <Field type="text" name="telefono" className="form-control" required />
+                                        {errors.telefono && touched.telefono ? <div className="alert alert-danger">{errors.telefono}</div> : null}
                                     </div>
                                     <div className="col-md-4">
                                         <label className="form-label">Celular</label>
@@ -154,6 +190,7 @@ const EnterprisesForm = () => {
                                                 <label className="form-label">Rut de la empresa</label>
                                                 <br />
                                                 <Field type="text" className="form-control" name="rut" />
+                                                {errors.rut && touched.rut ? <div className="alert alert-danger">{errors.rut}</div> : null}
                                             </div>
                                             <div className="col-md-6">
                                                 <label className="form-label">Tipo empresa</label>
