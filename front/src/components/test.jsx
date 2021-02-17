@@ -1,6 +1,7 @@
 import React from 'react';
  import { Formik, Form, Field } from 'formik';
  import * as Yup from 'yup';
+ import verificador  from 'verificador-rut'
  
  const SignupSchema = Yup.object().shape({
    firstName: Yup.string()
@@ -13,6 +14,10 @@ import React from 'react';
      .required('Required'),
    email: Yup.string().email('Invalid email').required('Required'),
  });
+
+ if(verificador("18.888.102-5")){
+   console.log("hola")
+ }
  
  export const ValidationSchemaExample = () => (
    <div>
