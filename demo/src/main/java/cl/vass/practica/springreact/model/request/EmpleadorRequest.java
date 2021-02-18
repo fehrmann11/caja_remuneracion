@@ -1,5 +1,7 @@
 package cl.vass.practica.springreact.model.request;
 
+import java.util.List;
+
 public class EmpleadorRequest {
     private String rut;
     private String razonSocial;
@@ -8,6 +10,7 @@ public class EmpleadorRequest {
     private String email;
     private String direccion;
     private String tipoEmpleador;
+    private List<String> trabajadores;
 
     public String getRut() {
         return rut;
@@ -66,7 +69,7 @@ public class EmpleadorRequest {
     }
 
     public EmpleadorRequest(String rut, String razonSocial, String telefono, String celular, String email,
-            String direccion, String tipoEmpleador) {
+            String direccion, String tipoEmpleador, List<String> trabajadores) {
         this.rut = rut;
         this.razonSocial = razonSocial;
         this.telefono = telefono;
@@ -74,9 +77,18 @@ public class EmpleadorRequest {
         this.email = email;
         this.direccion = direccion;
         this.tipoEmpleador = tipoEmpleador;
+        this.trabajadores = trabajadores;
     }
 
     public EmpleadorRequest() {
+    }
+
+    public List<String> getTrabajadores() {
+        return trabajadores;
+    }
+
+    public void setTrabajadores(List<String> trabajadores) {
+        this.trabajadores = trabajadores;
     }
     
 }

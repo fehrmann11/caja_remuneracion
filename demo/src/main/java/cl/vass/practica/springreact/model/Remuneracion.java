@@ -19,7 +19,7 @@ public class Remuneracion implements Serializable {
     private static final long serialVersionUID = -8536428049680018174L;
 
     @Embeddable
-    static class RemuneracionId implements Serializable {
+    public static class RemuneracionId implements Serializable {
         private static final long serialVersionUID = -7095701651379184525L;
 
         @ManyToOne(fetch = FetchType.LAZY)

@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,11 +16,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import cl.vass.practica.springreact.model.Empleador;
+import cl.vass.practica.springreact.model.Trabajador;
 import cl.vass.practica.springreact.model.enums.TipoEmpleador;
 import cl.vass.practica.springreact.model.request.EmpleadorRequest;
 import cl.vass.practica.springreact.model.response.EmpleadorResponse;
 import cl.vass.practica.springreact.model.response.ErrorResponse;
 import cl.vass.practica.springreact.repository.EmpleadorRepository;
+import cl.vass.practica.springreact.repository.TrabajadorRepository;
 import cl.vass.practica.springreact.util.EnumUtils;
 
 @RestController
@@ -26,8 +30,13 @@ import cl.vass.practica.springreact.util.EnumUtils;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class EmpleadorResource {
 
+    private Logger logger = LoggerFactory.getLogger(EmpleadorResource.class);
+
     @Autowired
     EmpleadorRepository empleadorRepository;
+
+    @Autowired
+    TrabajadorRepository trabajadorRepository;
 
     // Busca todos los empleadores
     @PreAuthorize("hasAnyAuthority('ADMIN','BACKOFFICE','NEGOCIO')")
@@ -147,6 +156,37 @@ public class EmpleadorResource {
         }catch(Exception e){
             ErrorResponse response = new ErrorResponse("Error al eliminar empleador",e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    // Agrega una lista de trabajadores al empleador por id (rut)
+    @PreAuthorize("hasAnyAuthority('BACKOFFICE')")
+    @PutMapping("/{id}/trabajador")
+    public ResponseEntity addTrabajadoresToEmpleador(@PathVariable("id") String id, @RequestBody EmpleadorRequest empleadorRequest) {
+        Optional<Empleador> optEmpleador = empleadorRepository.findById(id);
+        if(optEmpleador.isPresent()){
+            try{
+                Empleador empleador = optEmpleador.get();
+                List<String> trabajadoresStr = empleadorRequest.getTrabajadores();
+                if(trabajadoresStr!=null && !trabajadoresStr.isEmpty()){
+                    List<Trabajador> trabajadores = trabajadoresStr
+                        .stream()
+                        .map(s -> trabajadorRepository.findById(s).get())
+                        .collect(Collectors.toList());
+                    empleador.setTrabajadores(trabajadores);
+                    return ResponseEntity.status(HttpStatus.OK).body(empleadorRepository.save(empleador));
+                }else{
+                    ErrorResponse response = new ErrorResponse("Lista de trabajadores vacia",null);
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+                }
+            }catch(Exception e){
+                logger.error("Error al actualizar empleador", e);
+                ErrorResponse response = new ErrorResponse("Error al actualizar empleador",e.getMessage());
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+        }else{
+            ErrorResponse response = new ErrorResponse("Empleador no encontrado",null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 
