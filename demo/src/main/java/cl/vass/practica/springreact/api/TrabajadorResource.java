@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import cl.vass.practica.springreact.model.Empleador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -73,4 +74,26 @@ public ResponseEntity getTrabajadores(){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
+
+    //bucar trabajador por rut
+    @PreAuthorize("hasAnyAuthority('ADMIN','BACKOFFICE','NEGOCIO')")
+    @GetMapping("/{id}")
+    public ResponseEntity getTrabajadorByRut(@PathVariable("id") String id){
+        try{
+            Optional<Trabajador> optTrabajador = trabajadorRepository.findById(id);
+            if(optTrabajador.isPresent()){
+                return ResponseEntity.status(HttpStatus.OK).body(optTrabajador.get());
+            }else{
+                ErrorResponse response = new ErrorResponse("Empleador no encontrado",null);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        }catch(Exception e){
+            ErrorResponse response = new ErrorResponse("Error al recuperar empleador",e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+
+    /*como pido */
+
 }

@@ -62,6 +62,7 @@ const WorkerComponent = () => {
                             <tr id="info" onClick={() => informationWorker(worker.rut)} key={worker.rut}>
                                 <td >{worker.nombres} {worker.apellidoPaterno} {worker.apellidoMaterno}</td>
                                 <td >{worker.rut}</td>
+                                {console.log(worker)}
                                 <td><Button variant="outline-warning">Editar</Button></td>
                                 <td><Button variant="outline-danger">Eliminar</Button></td>
                             </tr>
