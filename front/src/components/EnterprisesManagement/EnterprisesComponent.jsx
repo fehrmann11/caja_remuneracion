@@ -2,8 +2,7 @@ import React, { useState, useEffect,useRef } from 'react';
 import EnterprisesService from '../../api/EnterprisesService';
 import './enterprise.css';
 import { useHistory } from 'react-router-dom'
-import { Form, FormControl, Button, Navbar, Nav, Table } from 'react-bootstrap'
-
+import { Form, FormControl, Button, Navbar, Nav, Table } from 'react-bootstrap';
 //import componentes reutilizables
 import Title from '../reuseComponent/Title'
 // import TableInfo from '../reuseComponent/TableInfo'

@@ -19,7 +19,7 @@ const HeaderComponent = () =>{
                         {isUserLoggedIn && <NavDropdown title="Gestión" id="collasible-nav-dropdown">
                             <Link className="dropdown-item" to="/enterprisesManagement" style={{textDecoration:'none', color:'black'}}>Gestión Empresas</Link>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.2">Gestión Trabajadores</NavDropdown.Item>
+                            <Link className="dropdown-item" to="/workerManagement" style={{textDecoration:'none', color:'black'}}>Gestión Trabajadores</Link>
                         </NavDropdown>}
                         {isUserLoggedIn && <Nav.Link href="#pricing">Remuneraciones </Nav.Link>}
                         {isUserLoggedIn && <NavDropdown title="Reportes" id="collasible-nav-dropdown">
