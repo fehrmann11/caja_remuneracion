@@ -11,6 +11,7 @@ import EnterprisesComponent from './EnterprisesManagement/EnterprisesComponent';
 import EnterprisesForm from './EnterprisesManagement/EnterprisesForm';
 import Test from './test';
 import WorkerComponent from './Worker/WorkerComponent';
+import WorkerForm from './Worker/WorkerForm';
 
 const RemunCarg = () => {
     return(
@@ -24,6 +25,7 @@ const RemunCarg = () => {
                     <AuthenticatedRoute path="/management" component={WelcomeComponent}/>
                     <AuthenticatedRoute path="/enterprisesManagement/:id" component={EnterprisesForm}/>
                     <AuthenticatedRoute path="/enterprisesManagement" component={EnterprisesComponent}/>
+                    <AuthenticatedRoute path="/workerManagement/:id" component={WorkerForm}/>
                     <AuthenticatedRoute path="/workerManagement" component={WorkerComponent}/>
                     <Route component={ErrorComponent}/>
                 </Switch>

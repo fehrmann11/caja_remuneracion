@@ -102,7 +102,7 @@ const EnterprisesComponent = () => {
 
     return (
         <div className="container">
-            <Title titulo="empleadores" />
+            <Title titulo="empleadores" ></Title>
 
             <div id="buscador">
                 <Navbar bg="light" expand="lg">
