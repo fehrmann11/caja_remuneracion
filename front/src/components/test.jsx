@@ -18,12 +18,15 @@ import React from 'react';
  if(true){
    console.log(verificador("18888102-5"));
    console.log(verificador("18.888.102-5"));
+   console.log(verificador("18888102"))
  }
- var rut = "18888102-5"
-var rutsplit = rut.split("-");
-var rutcont = rutsplit[0].concat(rutsplit[1])
+ var rut = "188881025"
+
+var rutsplit = rut.slice(0,rut.length-1)+"-"+verificador(rut.slice(0,rut.length-1))
+console.log(rutsplit)
+//var rutcont = rutsplit[0].concat(rutsplit[1])
  
-console.log(typeof rutcont)
+//console.log(typeof rutcont)
 
 
  export const ValidationSchemaExample = () => (

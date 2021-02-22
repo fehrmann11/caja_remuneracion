@@ -1,5 +1,5 @@
 import React from 'react';
-import './reuseComponent.css'
+import './reuseComponent.css';
 
 
 function TableInfo(props) {
