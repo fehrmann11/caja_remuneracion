@@ -6,33 +6,36 @@ import EnterprisesService from '../../api/EnterprisesService';
 import {useState} from 'react';
 const RemunerationComponent = () => {
     const [cargas,setCargas] = useState([]);
+    const [empleadores,setEmpleadores] = useState([]);
+    const [estado, setEstado] = useState(false);
+    const [periodo,setPeriodo] = useState([]);
 
     const API_TRABAJADOR = '/private/trabajador';
     const trabajadores = useGetdata(API_TRABAJADOR);
     
     
+    
+    //Esta funcionalidad lo que busca es traer las cargas, y los empleadores.
     const DetailInput = async(rut) =>{
+        setEstado(true);
         
         try {
             const response = await EnterprisesService.returnGet(`/private/trabajador/${rut}/cargas`);
-            setCargas(response.data)
+            const response_empleador = await EnterprisesService.returnGet(`/private/trabajador/${rut}/empleador`);
+            const response_periodo = await EnterprisesService.returnGet('/private/periodo');
+
+            setCargas(response.data);
+            setEmpleadores(response_empleador.data);
+            setPeriodo(response_periodo.data);
+
         } catch (error) {
             console.log(error);
         }
-        
 
-        // try{
-        // EnterprisesService.returnGet(`/private/trabajador/${rut}/cargas`)
-        //     .then(response => {
-        //         setCargas(response.data);
-        //     }
-        // }catch(err){
-        //     console.error(err);
-        // }
-           
-        //console.log(cargas);
     }
     console.log(cargas);
+    console.log(empleadores);
+    console.log(periodo);
 
     return (
         <div className="container">
@@ -59,6 +62,7 @@ const RemunerationComponent = () => {
                         }
                 </tbody>
             </Table >
+            {estado && <div>hola</div>}
         </div>
 
 
