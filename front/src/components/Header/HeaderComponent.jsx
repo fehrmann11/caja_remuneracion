@@ -21,7 +21,7 @@ const HeaderComponent = () =>{
                             <NavDropdown.Divider />
                             <Link className="dropdown-item" to="/workerManagement" style={{textDecoration:'none', color:'black'}}>Gestión Trabajadores</Link>
                         </NavDropdown>}
-                        {isUserLoggedIn && <Nav.Link href="#pricing">Remuneraciones </Nav.Link>}
+                        {isUserLoggedIn && <Link className="nav-link" to="/remuneration" >Remuneración</Link> }
                         {isUserLoggedIn && <NavDropdown title="Reportes" id="collasible-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">Información de remuneraciones</NavDropdown.Item>
                             <NavDropdown.Divider />

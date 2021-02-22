@@ -30,9 +30,11 @@ const EnterprisesForm = () => {
 
         if (estado) {
             //crear un nuevo empleador
-            console.log(values)
+            let split = values.rut.split("-");
+            let newRut = split[0].concat(split[1])
+            console.log(newRut)
             Api.create('/private/empleador', {
-                rut: values.rut,
+                rut: newRut,
                 razonSocial: values.razonSocial,
                 telefono: values.telefono,
                 celular: values.celular,
@@ -79,7 +81,7 @@ const EnterprisesForm = () => {
                 email: Yup.string().email('Ingrese un correo válido').required('Este campo es obligatorio'),
                 telefono: Yup.string().min(4, 'Ingresa un número válido').max(10, 'Número incorrecto').matches(/^([0-9])*$/, 'Solo números y sin espacios').required('Este campo es obligatorio'),
                 razonSocial: Yup.string().trim().matches(/^[a-z\s]+$/i, 'solo letras').required('Este campo es obligatorio'),
-                rut: Yup.string().min(11, 'Rut inválido').max(13, 'Muchos carácteres').required('Este campo es obligatorio'),
+                rut: Yup.string().min(9, 'Rut inválido').max(10, 'Muchos carácteres').required('Este campo es obligatorio'),
                 celular: Yup.string().min(4, 'Ingresa un número válido').max(10, 'Número incorrecto').matches(/^([0-9])*$/, 'Solo números y sin espacios'),
                 direccion: Yup.string().trim()
             }))
@@ -169,7 +171,7 @@ const EnterprisesForm = () => {
                                         <div style={{marginTop:'16px'}} className="row container">
                                             <div className="col-md-6">
                                                 <label className="form-label">Rut: </label>
-                                                <Field style={{marginLeft:'16px'}} placeholder="ejemplo:12.345.678-9 *" type="text" className="field" name="rut" />
+                                                <Field style={{marginLeft:'16px'}} placeholder="ejemplo:12345678-9 *" type="text" className="field" name="rut" />
                                                 {errors.rut && touched.rut ? <div className="alert alert-danger">{errors.rut}</div> : null}
                                             </div>
                                             <div className="col-md-6">
