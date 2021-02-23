@@ -14,8 +14,12 @@ import WorkerComponent from './Worker/WorkerComponent';
 import WorkerForm from './Worker/WorkerForm';
 import RemunerationComponent from './remuneration/RemunerationComponent';
 
+
 const RemunCarg = () => {
+
+
     return(
+        
         <div className="RemunCarg">
             <Router>
                 <HeaderComponent/>
@@ -35,6 +39,7 @@ const RemunCarg = () => {
             </Router>
    
         </div>
+       
     )
 }
 
