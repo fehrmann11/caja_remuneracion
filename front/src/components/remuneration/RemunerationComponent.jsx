@@ -92,7 +92,7 @@ const RemunerationComponent = () => {
             try {
                 const consulta_remuneracion = await EnterprisesService.returnGet(`/private/remuneracion/carga/${rutCarga}/trabajador/${rut}/empleador/${rutEmpleador}/periodo/${unicoPeriodo}`);
                 setRemuneracion(consulta_remuneracion.data);
-                
+                setEstado(false);            
     
             } catch (error) {
                 console.log(error);
