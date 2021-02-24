@@ -29,6 +29,8 @@ const RemunerationComponent = () => {
 
     const [remuneracion,setRemuneracion] = useState([]);
 
+    const [estadoConsulta,setEstadoConsulta] = useState(false);
+
     //let history = useHistory();
 
     const API_TRABAJADOR = '/private/trabajador';
@@ -41,6 +43,11 @@ const RemunerationComponent = () => {
     const DetailInput = async (rut) => {
         setEstado(true);
         setRut(rut);
+        setEstadoConsulta(false);
+        setRutCarga('');
+        setRutEmpleador('');
+        setUnicoPeriodo('')
+
 
 
 
@@ -92,7 +99,8 @@ const RemunerationComponent = () => {
             try {
                 const consulta_remuneracion = await EnterprisesService.returnGet(`/private/remuneracion/carga/${rutCarga}/trabajador/${rut}/empleador/${rutEmpleador}/periodo/${unicoPeriodo}`);
                 setRemuneracion(consulta_remuneracion.data);
-                setEstado(false);            
+                setEstado(false);         
+                setEstadoConsulta(true);   
     
             } catch (error) {
                 console.log(error);
@@ -161,6 +169,44 @@ const RemunerationComponent = () => {
                     <Select options={periodo} onChange={handleChangePeriodo} />
                     <button onClick={onSubmit}>Consultar</button>
                 </div>}
+            {
+                estadoConsulta &&
+                <div className="contenedor">
+                <div className="items">
+                      <div className="items-head">
+                          <p>{remuneracion.id.trabajador.nombres} {remuneracion.id.trabajador.apellidoPaterno} {remuneracion.id.trabajador.apellidoMaterno}</p>
+                          <hr />
+                      </div>
+                      <div className="items-body">
+                          <div className="itemss-body-content">
+                              <span><strong>Empresa: </strong>{remuneracion.id.empleador.razonSocial}</span>
+                          </div>
+                          <div className="itemss-body-content">
+                              <span><strong>Carga: </strong>{remuneracion.id.carga.nombres} {remuneracion.id.carga.nombres} {remuneracion.id.carga.nombres}</span>
+                          </div>
+                          <div className="itemss-body-content">
+                              <span><strong>Período: </strong>{remuneracion.id.periodo.nombre}</span>
+                          </div>
+                          <div className="itemss-body-content">
+                              <span><strong>Estado:  </strong>{remuneracion.estado}</span>
+                          </div>
+                          <div className="itemss-body-content">
+                              <span><strong>Monto: </strong>${remuneracion.monto}</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+                // <div className="container">
+                //     <ul>
+                //         <li>Nombre Empleador: {remuneracion.id.empleador.razonSocial}</li>
+                //         <li>Nombre Carga: {remuneracion.id.carga.nombres} {remuneracion.id.carga.nombres} {remuneracion.id.carga.nombres}</li>
+                //         <li>Período: {remuneracion.id.periodo.nombre} </li>
+                //         <li>Estado: {remuneracion.estado}</li>
+                //         <li>Monto:${remuneracion.monto}</li>
+                //     </ul>
+
+                // </div>
+            }
         </div>
     )
 }
