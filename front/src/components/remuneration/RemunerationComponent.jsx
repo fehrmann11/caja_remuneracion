@@ -3,7 +3,7 @@ import useGetdata from '../hooks/useGetdata';
 import { Table } from 'react-bootstrap';
 import verificador from 'verificador-rut';
 import EnterprisesService from '../../api/EnterprisesService';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, FormControl, Button, Navbar, Nav } from 'react-bootstrap';
 
@@ -28,17 +28,64 @@ const RemunerationComponent = () => {
     const [rutEmpleador, setRutEmpleador] = useState('');
     const [unicoPeriodo, setUnicoPeriodo] = useState('');
     //para mostrar consulta
-    const [remuneracion,setRemuneracion] = useState([]);
+    const [remuneracion, setRemuneracion] = useState([]);
 
-    const [estadoConsulta,setEstadoConsulta] = useState(false);
+    const [estadoConsulta, setEstadoConsulta] = useState(false);
+    //buscador
+    const [textBuscar, setTextBuscar] = useState("");
+    const search = useRef(null);
 
     let history = useHistory();
 
     const API_TRABAJADOR = '/private/trabajador';
-    const trabajadores = useGetdata(API_TRABAJADOR);
+    
+    //const trabajadores = useGetdata(API_TRABAJADOR);
+    const [trabajadores,setTrabajadores] = useState([]);
+    const [trabajadoresBusc,setTrabajadoresBusc] = useState([]);
 
 
 
+    useEffect(() => {
+        EnterprisesService.returnGet(API_TRABAJADOR)
+            .then(response => {
+                setTrabajadores(response.data);
+                setTrabajadoresBusc(response.data);
+            })
+            .catch(error => console.log(error))
+    }, []);
+
+    
+    //cambio de estado del buscador
+    const handleChange = () => {
+        setTextBuscar(search.current.value);
+    }
+
+    //use efect buscador
+    //use efect del buscador
+    useEffect(() => {
+        setTrabajadoresBusc(trabajadoresBusc);
+        if (Number.isInteger(parseInt(textBuscar[0]))) {
+            EnterprisesService.returnGet(`/private/trabajador/busqueda?idRut=${textBuscar}`)
+                .then(response => {
+                    let newData = response.data
+                   // setEnterprises(newData)
+                })
+        }
+        //Si es nombre de la empresa
+        else if (textBuscar === '') {
+            //etEnterprises(enterprisesOld);
+        }
+        else {
+            EnterprisesService.returnGet(`/private/empleador/busqueda?name=${textBuscar}`)
+                .then(response => {
+                    let newData = response.data
+                  //  setEnterprises(newData)
+                })
+        }
+    }, [textBuscar,trabajadoresBusc])
+
+
+    console.log(textBuscar);
 
     //Esta funcionalidad lo que busca es traer las cargas, y los empleadores.
     const DetailInput = async (rut) => {
@@ -63,9 +110,9 @@ const RemunerationComponent = () => {
             setPeriodos(response_periodos.data);
 
         } catch (error) {
-            
+
             console.error(error);
-            
+
         }
 
     }
@@ -97,23 +144,23 @@ const RemunerationComponent = () => {
 
 
     //función que muestra la remuneración....
-    const onSubmit = async() => {
-        if(rutCarga!=='' && rutEmpleador!=='' && unicoPeriodo!==''){
+    const onSubmit = async () => {
+        if (rutCarga !== '' && rutEmpleador !== '' && unicoPeriodo !== '') {
             try {
                 const consulta_remuneracion = await EnterprisesService.returnGet(`/private/remuneracion/carga/${rutCarga}/trabajador/${rut}/empleador/${rutEmpleador}/periodo/${unicoPeriodo}`);
                 setRemuneracion(consulta_remuneracion.data);
-                setEstado(false);         
-                setEstadoConsulta(true);   
-    
+                setEstado(false);
+                setEstadoConsulta(true);
+
             } catch (error) {
                 alert("Este trabajador no tiene remuneraciones para este período")
                 console.log(error);
             }
-        }else{
+        } else {
             console.log("mas tranquilo cerebrito")
         }
-        
-        console.log(rut,rutCarga,rutEmpleador,unicoPeriodo);
+
+        console.log(rut, rutCarga, rutEmpleador, unicoPeriodo);
 
     }
 
@@ -133,11 +180,11 @@ const RemunerationComponent = () => {
 
     console.log(remuneracion);
 
-    const addPeriodo = () =>{
+    const addPeriodo = () => {
 
-        if(rut!==''){
+        if (rut !== '') {
             history.push(`/remuneration/${rut}`)
-        }else{
+        } else {
             alert("Selecciona un trabajador primero")
         }
 
@@ -160,8 +207,8 @@ const RemunerationComponent = () => {
                             <Button onClick={addPeriodo} variant="outline-primary">agregar empleador</Button>
                         </Nav>
                         <Form inline>
-                            <FormControl name="text"  type="text" placeholder="Buscar" className="mr-sm-2" />
-{/*value={textBuscar} ref={search}  onChange={handleChange} */}
+                            <FormControl ref={search} onChange={handleChange} name="text" type="text" placeholder="Buscar" className="mr-sm-2" />
+                            {/*value={textBuscar}    */}
                         </Form>
                     </Navbar.Collapse>
                 </Navbar>
@@ -200,30 +247,30 @@ const RemunerationComponent = () => {
             {
                 estadoConsulta &&
                 <div className="contenedor">
-                <div className="items">
-                      <div className="items-head">
-                          <p>{remuneracion.id.trabajador.nombres} {remuneracion.id.trabajador.apellidoPaterno} {remuneracion.id.trabajador.apellidoMaterno}</p>
-                          <hr />
-                      </div>
-                      <div className="items-body">
-                          <div className="itemss-body-content">
-                              <span><strong>Empresa: </strong>{remuneracion.id.empleador.razonSocial}</span>
-                          </div>
-                          <div className="itemss-body-content">
-                              <span><strong>Carga: </strong>{remuneracion.id.carga.nombres} {remuneracion.id.carga.nombres} {remuneracion.id.carga.nombres}</span>
-                          </div>
-                          <div className="itemss-body-content">
-                              <span><strong>Período: </strong>{remuneracion.id.periodo.nombre}</span>
-                          </div>
-                          <div className="itemss-body-content">
-                              <span><strong>Estado:  </strong>{remuneracion.estado}</span>
-                          </div>
-                          <div className="itemss-body-content">
-                              <span><strong>Monto: </strong>${remuneracion.monto}</span>
-                          </div>
-                      </div>
-                  </div>
-              </div>
+                    <div className="items">
+                        <div className="items-head">
+                            <p>{remuneracion.id.trabajador.nombres} {remuneracion.id.trabajador.apellidoPaterno} {remuneracion.id.trabajador.apellidoMaterno}</p>
+                            <hr />
+                        </div>
+                        <div className="items-body">
+                            <div className="itemss-body-content">
+                                <span><strong>Empresa: </strong>{remuneracion.id.empleador.razonSocial}</span>
+                            </div>
+                            <div className="itemss-body-content">
+                                <span><strong>Carga: </strong>{remuneracion.id.carga.nombres} {remuneracion.id.carga.nombres} {remuneracion.id.carga.nombres}</span>
+                            </div>
+                            <div className="itemss-body-content">
+                                <span><strong>Período: </strong>{remuneracion.id.periodo.nombre}</span>
+                            </div>
+                            <div className="itemss-body-content">
+                                <span><strong>Estado:  </strong>{remuneracion.estado}</span>
+                            </div>
+                            <div className="itemss-body-content">
+                                <span><strong>Monto: </strong>${remuneracion.monto}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 // <div className="container">
                 //     <ul>
                 //         <li>Nombre Empleador: {remuneracion.id.empleador.razonSocial}</li>
