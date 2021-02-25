@@ -140,11 +140,7 @@ const RemunerationComponent = () => {
         }else{
             alert("Selecciona un trabajador primero")
         }
-/*//función que agrega una empresa
-    const addEnterprise = () => {
-        history.push(`/enterprisesManagement/-1`)
-    }
-     */
+
 
     }
 
