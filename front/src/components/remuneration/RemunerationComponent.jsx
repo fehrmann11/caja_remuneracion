@@ -5,6 +5,7 @@ import verificador from 'verificador-rut';
 import EnterprisesService from '../../api/EnterprisesService';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Form, FormControl, Button, Navbar, Nav } from 'react-bootstrap';
 
 import Select from 'react-select';
 
@@ -22,16 +23,16 @@ const RemunerationComponent = () => {
     const [empleador, setEmpleador] = useState('');
     const [carga, setCarga] = useState([]);
 
-
+    //para enviar a consultar
     const [rutCarga, setRutCarga] = useState('');
     const [rutEmpleador, setRutEmpleador] = useState('');
     const [unicoPeriodo, setUnicoPeriodo] = useState('');
-
+    //para mostrar consulta
     const [remuneracion,setRemuneracion] = useState([]);
 
     const [estadoConsulta,setEstadoConsulta] = useState(false);
 
-    //let history = useHistory();
+    let history = useHistory();
 
     const API_TRABAJADOR = '/private/trabajador';
     const trabajadores = useGetdata(API_TRABAJADOR);
@@ -62,7 +63,9 @@ const RemunerationComponent = () => {
             setPeriodos(response_periodos.data);
 
         } catch (error) {
-            console.log(error);
+            
+            console.error(error);
+            
         }
 
     }
@@ -103,6 +106,7 @@ const RemunerationComponent = () => {
                 setEstadoConsulta(true);   
     
             } catch (error) {
+                alert("Este trabajador no tiene remuneraciones para este período")
                 console.log(error);
             }
         }else{
@@ -129,16 +133,44 @@ const RemunerationComponent = () => {
 
     console.log(remuneracion);
 
-    // useEffect(()=>{
+    const addPeriodo = () =>{
 
-    // })
+        if(rut!==''){
+            history.push(`/remuneration/${rut}`)
+        }else{
+            alert("Selecciona un trabajador primero")
+        }
+/*//función que agrega una empresa
+    const addEnterprise = () => {
+        history.push(`/enterprisesManagement/-1`)
+    }
+     */
+
+    }
+
+
 
     return (
 
         <div className="container">
             <Title titulo="Remuneraciones" />
-            {/*información */}
+            {/*Buscador*/}
+            <div id="buscador">
+                <Navbar bg="light" expand="lg">
 
+
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="mr-auto">
+                            <Button onClick={addPeriodo} variant="outline-primary">agregar empleador</Button>
+                        </Nav>
+                        <Form inline>
+                            <FormControl name="text"  type="text" placeholder="Buscar" className="mr-sm-2" />
+{/*value={textBuscar} ref={search}  onChange={handleChange} */}
+                        </Form>
+                    </Navbar.Collapse>
+                </Navbar>
+            </div>
+            {/*información */}
             <Table striped bordered hover size="sm">
                 <thead>
                     <tr id="headerInfo">

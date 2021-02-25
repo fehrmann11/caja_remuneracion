@@ -12,21 +12,17 @@ const Search = ({search,searchInput,handleSearch,ruta}) =>{
     return (
         <div id="buscador">
                 <Navbar bg="light" expand="lg">
-
-
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
                             <Button onClick={add} variant="outline-primary">agregar empleador</Button>
                         </Nav>
                         <Form inline>
                             <FormControl name="text" value={search} ref={searchInput} onChange={handleSearch}  type="text" placeholder="Buscar" className="mr-sm-2" />
-
                         </Form>
                     </Navbar.Collapse>
                 </Navbar>
             </div>
     )
-
 }
 
 //FormControl value={textBuscar} ref={search}  onChange={handleChange}
