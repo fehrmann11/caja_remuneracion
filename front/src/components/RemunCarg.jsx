@@ -33,7 +33,7 @@ const RemunCarg = () => {
                     <AuthenticatedRoute path="/enterprisesManagement" component={EnterprisesComponent}/>
                     <AuthenticatedRoute path="/workerManagement/:id" component={WorkerForm}/>
                     <AuthenticatedRoute path="/workerManagement" component={WorkerComponent}/>
-                    <AuthenticatedRoute path="/remuneration/:id" component={RemunerationForm}/>
+                    <AuthenticatedRoute path="/remuneration/:rut/:rutEmpleador/:rutCarga/:periodo" component={RemunerationForm}/>
                     <AuthenticatedRoute path="/remuneration" component={RemunerationComponent}/>
                     <Route component={ErrorComponent}/>
                 </Switch>

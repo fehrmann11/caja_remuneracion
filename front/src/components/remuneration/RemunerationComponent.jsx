@@ -181,10 +181,10 @@ const RemunerationComponent = () => {
 
     const addPeriodo = () => {
 
-        if (rut !== '') {
-            history.push(`/remuneration/${rut}`)
+        if (rut !== ''&&rutCarga !== '' && rutEmpleador !== '' && unicoPeriodo !== '') {
+            history.push(`/remuneration/${rut}/${rutEmpleador}/${rutCarga}/${unicoPeriodo}`)
         } else {
-            alert("Selecciona un trabajador primero")
+            alert("Selecciona un trabajador primero, con sus cargas, su empleador y el perido!")
         }
 
 
@@ -203,7 +203,7 @@ const RemunerationComponent = () => {
 
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
-                            <Button onClick={addPeriodo} variant="outline-primary">agregar empleador</Button>
+                            <Button onClick={addPeriodo} variant="outline-primary">agregar/consultar</Button>
                         </Nav>
                         <Form inline>
                             <FormControl ref={search} onChange={handleChange} name="text" type="text" placeholder="Buscar" className="mr-sm-2" />
