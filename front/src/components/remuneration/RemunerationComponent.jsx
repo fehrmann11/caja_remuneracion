@@ -1,5 +1,4 @@
 import Title from '../reuseComponent/Title';
-import useGetdata from '../hooks/useGetdata';
 import { Table } from 'react-bootstrap';
 import verificador from 'verificador-rut';
 import EnterprisesService from '../../api/EnterprisesService';
@@ -38,10 +37,10 @@ const RemunerationComponent = () => {
     let history = useHistory();
 
     const API_TRABAJADOR = '/private/trabajador';
-    
+
     //const trabajadores = useGetdata(API_TRABAJADOR);
-    const [trabajadores,setTrabajadores] = useState([]);
-    const [trabajadoresBusc,setTrabajadoresBusc] = useState([]);
+    const [trabajadores, setTrabajadores] = useState([]);
+    const [trabajadoresBusc, setTrabajadoresBusc] = useState([]);
 
 
 
@@ -54,7 +53,7 @@ const RemunerationComponent = () => {
             .catch(error => console.log(error))
     }, []);
 
-    
+
     //cambio de estado del buscador
     const handleChange = () => {
         setTextBuscar(search.current.value);
@@ -63,29 +62,30 @@ const RemunerationComponent = () => {
     //use efect buscador
     //use efect del buscador
     useEffect(() => {
-        setTrabajadoresBusc(trabajadoresBusc);
+       // setTrabajadoresBusc(trabajadoresBusc);
         if (Number.isInteger(parseInt(textBuscar[0]))) {
             EnterprisesService.returnGet(`/private/trabajador/busqueda?idRut=${textBuscar}`)
                 .then(response => {
                     let newData = response.data
-                   // setEnterprises(newData)
+                    setTrabajadores(newData)
                 })
         }
         //Si es nombre de la empresa
         else if (textBuscar === '') {
-            //etEnterprises(enterprisesOld);
+            setTrabajadores(trabajadoresBusc);
         }
         else {
-            EnterprisesService.returnGet(`/private/empleador/busqueda?name=${textBuscar}`)
+            EnterprisesService.returnGet(`/private/trabajador/busqueda?name=${textBuscar}`)
                 .then(response => {
                     let newData = response.data
-                  //  setEnterprises(newData)
+                    setTrabajadores(newData)
                 })
         }
-    }, [textBuscar,trabajadoresBusc])
+    }, [textBuscar, trabajadoresBusc])
 
 
-    console.log(textBuscar);
+    console.log(trabajadoresBusc);
+    console.log(textBuscar)
 
     //Esta funcionalidad lo que busca es traer las cargas, y los empleadores.
     const DetailInput = async (rut) => {
@@ -178,7 +178,6 @@ const RemunerationComponent = () => {
 
     }
 
-    console.log(remuneracion);
 
     const addPeriodo = () => {
 
