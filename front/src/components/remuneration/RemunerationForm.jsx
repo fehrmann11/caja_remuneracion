@@ -9,7 +9,6 @@ const RemunerationForm = () => {
     let { rut, rutEmpleador, rutCarga, periodo } = match.params;
     const [bol, setbol] = useState(true);
     const [monto] = useState('');
-    const [estado] = useState(0);
     let history = useHistory();
 
 
@@ -38,14 +37,22 @@ const RemunerationForm = () => {
         // let trabajador_rut_trabajador;
         // let periodo_idperiodo ;
         // let empleador_rut_empleador;
+        /*{
+    "rutCarga":"123456789",
+    "rutTrabajador":"124316170 ",
+    "rutEmpleador":"188881025",
+    "idPeriodo":2,
+    "monto": 4000
+    
+} */
 
         EnterprisesService.create('/private/remuneracion', {
-            carga_rut_carga: values.rutCarga,
-            trabajador_rut_trabajador: values.rut,
-            periodo_idperiodo: values.periodo,
-            monto: values.monto,
-            estado:values.estado,
-            empleador_rut_empleador:values.rutEmpleador
+            rutCarga: values.rutCarga,
+            rutTrabajador: values.rut,
+            rutEmpleador: values.rutEmpleador,
+            idPeriodo: values.periodo,
+            monto:values.monto,
+            
         }).then(() => {
             alert("Ha sido creado con exito")
             history.push(`/remuneration`)
@@ -64,8 +71,7 @@ const RemunerationForm = () => {
                         rutCarga,
                         rutEmpleador,
                         periodo,
-                        monto,
-                        estado
+                        monto
                     }}
                     enableReinitialize={true}
                     onSubmit={onSubmit}
@@ -84,16 +90,7 @@ const RemunerationForm = () => {
                                         <Field placeholder="Monto (ejemplo:100000) *" type="text" name="monto" className="field" required />
                                         {/*errors.razonSocial && touched.razonSocial ? <div className="alert alert-danger">{errors.razonSocial}</div> : null*/}
                                     </div>
-                                    <div className="col-md-6">
-                                        <label className="form-label">Estado</label>
-                                        <br />
-
-                                        <Field as="select" name="estado">
-                                            <option value="0">Cerrado</option>
-                                            <option value="1">Abierto</option>
-
-                                        </Field>
-                                    </div>
+                                   
                                     <div className="container" style={{ marginLeft: '35%' }}>
                                         <Button type="submit">Save</Button>
                                     </div>

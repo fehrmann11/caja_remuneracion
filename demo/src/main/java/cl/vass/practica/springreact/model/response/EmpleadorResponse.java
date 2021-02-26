@@ -11,6 +11,8 @@ public class EmpleadorResponse {
     private final String direccion;
     private final TipoEmpleador tipoEmpleador;
 
+
+
     public String getRut() {
         return rut;
     }

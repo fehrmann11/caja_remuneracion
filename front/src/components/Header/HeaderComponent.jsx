@@ -11,7 +11,7 @@ const HeaderComponent = () =>{
         const isUserLoggedIn = SecurityService.isUserLoggedIn();
         return (
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand><Link className="navbar-brand" to="/">VASS</Link></Navbar.Brand>
+                <Navbar.Brand><Link className="navbar-brand" to="/">HENRY</Link></Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
